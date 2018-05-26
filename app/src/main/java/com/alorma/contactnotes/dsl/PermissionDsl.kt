@@ -12,7 +12,8 @@ annotation class PermissionDsl
 
 @PermissionDsl
 class PermissionBuilder(
-        private val permissionListener: DexterBuilder.SinglePermissionListener
+        private val name: String,
+        private val permissionListener: DexterBuilder.Permission
 ) {
 
     private lateinit var permissionGranted: (permissionName: String) -> Unit
@@ -26,25 +27,26 @@ class PermissionBuilder(
     private lateinit var dexter: DexterBuilder
 
     fun build(): PermissionBuilder {
-        dexter = permissionListener.withListener(object : PermissionListener {
-            override fun onPermissionGranted(response: PermissionGrantedResponse) {
-                permissionGranted(response.permissionName)
-            }
+        dexter = permissionListener.withPermission(name)
+                .withListener(object : PermissionListener {
+                    override fun onPermissionGranted(response: PermissionGrantedResponse) {
+                        permissionGranted(response.permissionName)
+                    }
 
-            override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest,
-                                                            token: PermissionToken) {
+                    override fun onPermissionRationaleShouldBeShown(permission: PermissionRequest,
+                                                                    token: PermissionToken) {
 
-                permissionRationale?.invoke(permission.name, {
-                    token.continuePermissionRequest()
-                }, {
-                    token.cancelPermissionRequest()
+                        permissionRationale?.invoke(permission.name, {
+                            token.continuePermissionRequest()
+                        }, {
+                            token.cancelPermissionRequest()
+                        })
+                    }
+
+                    override fun onPermissionDenied(response: PermissionDeniedResponse) {
+                        permissionDenied(response.permissionName)
+                    }
                 })
-            }
-
-            override fun onPermissionDenied(response: PermissionDeniedResponse) {
-                permissionDenied(response.permissionName)
-            }
-        })
         return this
     }
 
@@ -68,9 +70,11 @@ class PermissionBuilder(
 }
 
 @PermissionDsl
-fun DexterBuilder.SinglePermissionListener.dsl(function: PermissionBuilder.() -> Unit):
+fun DexterBuilder.Permission.dsl(
+        name: String,
+        function: PermissionBuilder.() -> Unit):
         PermissionBuilder =
-        with(PermissionBuilder(this)) {
+        with(PermissionBuilder(name, this)) {
             apply(function)
             build()
         }

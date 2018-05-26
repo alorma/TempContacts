@@ -1,11 +1,14 @@
 package com.alorma.contactnotes.ui.main
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.alorma.contactnotes.ContactNotesApp.Companion.component
 import com.alorma.contactnotes.R
 import kotlinx.android.synthetic.main.main_fragment.view.*
@@ -29,11 +32,9 @@ class MainFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         activity?.let {
-            component add MainModule(it) inject this
+            component add MainModule(it, this) inject this
 
             viewModel.setupPermission({
-                Toast.makeText(context, "Granted", Toast.LENGTH_SHORT).show()
-            }, {
                 Toast.makeText(context, "Deny", Toast.LENGTH_SHORT).show()
             })
         }
@@ -43,9 +44,21 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.fab.setOnClickListener {
-            viewModel.load()
+            viewModel.load().observe(this@MainFragment, Observer {
+                it?.let {
+                    onContactLoaded(it)
+                }
+            })
         }
-
     }
 
+    private fun onContactLoaded(it: Uri) {
+        Toast.makeText(context, it.toString(), Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        viewModel.onResult(data)
+    }
 }
