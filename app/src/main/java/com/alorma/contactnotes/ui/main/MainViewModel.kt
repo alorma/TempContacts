@@ -2,18 +2,22 @@ package com.alorma.contactnotes.ui.main
 
 import android.Manifest
 import android.content.Intent
-import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.alorma.contactnotes.data.framework.SystemContactDataSource
+import com.alorma.contactnotes.domain.model.Contact
 import com.alorma.contactnotes.dsl.PermissionBuilder
 import com.alorma.contactnotes.dsl.dsl
 import com.karumi.dexter.DexterBuilder
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class MainViewModel(private val permission: DexterBuilder.Permission,
-                    private val navigation: MainNavigation) : ViewModel() {
+                    private val navigation: MainNavigation,
+                    private val systemDs: SystemContactDataSource) : ViewModel() {
 
-    val contactUri: MutableLiveData<Uri> = MutableLiveData()
+    val contactUri: MutableLiveData<Contact> = MutableLiveData()
 
     private lateinit var permissionBuilder: PermissionBuilder
 
@@ -33,14 +37,21 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
         }
     }
 
-    fun load(): LiveData<Uri> {
+    fun load(): LiveData<Contact> {
         permissionBuilder.check()
         return contactUri
     }
 
     fun onResult(data: Intent?) {
         navigation.parse(data)?.let {
-            contactUri.postValue(it)
+            systemDs(it)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({
+                        contactUri.postValue(it)
+                    }, {
+
+                    })
         }
     }
 }
