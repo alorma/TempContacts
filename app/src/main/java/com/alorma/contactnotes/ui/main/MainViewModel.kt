@@ -17,7 +17,7 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
                     private val navigation: MainNavigation,
                     private val systemDs: SystemContactDataSource) : ViewModel() {
 
-    val contactUri: MutableLiveData<Contact> = MutableLiveData()
+    private lateinit var contactUri: MutableLiveData<Contact>
 
     private lateinit var permissionBuilder: PermissionBuilder
 
@@ -38,6 +38,7 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
     }
 
     fun load(): LiveData<Contact> {
+        contactUri = MutableLiveData()
         permissionBuilder.check()
         return contactUri
     }
