@@ -4,6 +4,7 @@ import android.app.Application
 import com.alorma.contactnotes.di.ApplicationComponent
 import com.alorma.contactnotes.di.ApplicationModule
 import com.alorma.contactnotes.di.DaggerApplicationComponent
+import com.alorma.contactnotes.di.DataModule
 
 class ContactNotesApp : Application() {
 
@@ -16,6 +17,7 @@ class ContactNotesApp : Application() {
 
         component = DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))
+                .dataModule(DataModule(this))
                 .build()
     }
 

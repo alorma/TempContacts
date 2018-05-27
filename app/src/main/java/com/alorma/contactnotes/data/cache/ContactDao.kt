@@ -1,14 +1,15 @@
 package com.alorma.contactnotes.data.cache
 
 import androidx.room.*
+import io.reactivex.Maybe
 
 @Dao
 interface ContactDao {
     @Query("SELECT * FROM ${ContactEntity.TABLE_NAME}")
-    fun get(): List<ContactEntity>
+    fun get(): Maybe<List<ContactEntity>>
 
     @Query("SELECT * FROM ${ContactEntity.TABLE_NAME} WHERE id LIKE :id LIMIT 1")
-    fun findById(id: String): ContactEntity
+    fun findById(id: Long): Maybe<ContactEntity>
 
     @Query("SELECT * FROM ${ContactEntity.TABLE_NAME} WHERE androidId LIKE :id LIMIT 1")
     fun findByAndroidId(id: String): ContactEntity

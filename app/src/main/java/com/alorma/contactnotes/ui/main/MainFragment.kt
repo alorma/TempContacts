@@ -44,12 +44,16 @@ class MainFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         view.fab.setOnClickListener {
-            viewModel.load().observe(this@MainFragment, Observer {
+            viewModel.getNewContact().observe(this@MainFragment, Observer {
                 it?.let {
                     onContactLoaded(it)
                 }
             })
         }
+
+        viewModel.loadContacts().observe(this, Observer {
+
+        })
     }
 
     private fun onContactLoaded(it: Contact) {

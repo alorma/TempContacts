@@ -28,7 +28,7 @@ class SystemContactDataSource @Inject constructor(private val context: Context) 
 
                         it.close()
 
-                        Contact(id, name)
+                        Contact(null, id, name)
                     }
 
 }
