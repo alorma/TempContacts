@@ -12,7 +12,10 @@ interface ContactDao {
     fun findById(id: Long): Maybe<ContactEntity>
 
     @Query("SELECT * FROM ${ContactEntity.TABLE_NAME} WHERE androidId LIKE :id LIMIT 1")
-    fun findByAndroidId(id: String): ContactEntity
+    fun findByAndroidId(id: String): Maybe<ContactEntity>
+
+    @Query("SELECT * FROM ${ContactEntity.TABLE_NAME} WHERE androidId LIKE :id LIMIT 1")
+    fun getByAndroidId(id: String): ContactEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(vararg contactEntity: ContactEntity)

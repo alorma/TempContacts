@@ -70,6 +70,7 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         contactUri.postValue(it)
+                        loadContacts()
                     }, {
 
                     })

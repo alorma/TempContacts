@@ -12,5 +12,12 @@ class ContactDataSource @Inject constructor(
 
     operator fun invoke(id: Long): Maybe<Contact> = contactDao.findById(id).map { mapper(it) }
 
-    fun save(it: Contact) = contactDao.insertAll(mapper(it))
+    operator fun invoke(id: String): Maybe<Contact> = contactDao.findByAndroidId(id).map { mapper(it) }
+
+    fun save(it: Contact) =
+            it.takeIf {
+                contactDao.getByAndroidId(it.androidId) == null
+            }?.let {
+                contactDao.insertAll(mapper(it))
+            }
 }
