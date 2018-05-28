@@ -14,10 +14,12 @@ class ContactDataSource @Inject constructor(
 
     operator fun invoke(id: String): Maybe<Contact> = contactDao.findByAndroidId(id).map { mapper(it) }
 
-    fun save(it: Contact) =
-            it.takeIf {
-                contactDao.getByAndroidId(it.androidId) == null
-            }?.let {
-                contactDao.insertAll(mapper(it))
-            }
+    fun save(it: Contact) {
+        val byAndroidId = contactDao.getByAndroidId(it.androidId)
+        if (byAndroidId == null) {
+            contactDao.insertAll(mapper(it))
+        } else {
+            contactDao.update(mapper(it.copy(id = byAndroidId.id)))
+        }
+    }
 }
