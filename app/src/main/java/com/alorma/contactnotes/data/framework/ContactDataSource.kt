@@ -7,7 +7,7 @@ import com.alorma.contactnotes.domain.model.Contact
 import io.reactivex.Maybe
 import javax.inject.Inject
 
-class SystemContactDataSource @Inject constructor(private val context: Context) {
+class ContactDataSource @Inject constructor(private val context: Context) {
 
     operator fun invoke(contactUri: Uri): Maybe<Contact> {
         return Maybe.defer {
