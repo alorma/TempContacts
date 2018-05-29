@@ -3,7 +3,9 @@ package com.alorma.tempcontacts.data.framework
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
+import android.util.Log
 import com.alorma.tempcontacts.domain.model.Contact
+import io.reactivex.Completable
 import io.reactivex.Maybe
 import javax.inject.Inject
 
@@ -31,4 +33,7 @@ class ContactDataSource @Inject constructor(private val context: Context) {
                         Contact(null, id, name)
                     }
 
+    fun delete(it: Contact): Completable = Completable.complete().doOnComplete {
+        Log.i("Alorma-Delete", "System delete")
+    }
 }

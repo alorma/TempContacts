@@ -1,6 +1,7 @@
 package com.alorma.tempcontacts.data.cache
 
 import com.alorma.tempcontacts.domain.model.Contact
+import io.reactivex.Completable
 import io.reactivex.Maybe
 import javax.inject.Inject
 
@@ -21,5 +22,9 @@ class ContactDataSource @Inject constructor(
         } else {
             contactDao.update(mapper(it.copy(id = byAndroidId.id)))
         }
+    }
+
+    fun delete(it: Contact): Completable = Completable.fromAction {
+        contactDao.delete(mapper(it))
     }
 }

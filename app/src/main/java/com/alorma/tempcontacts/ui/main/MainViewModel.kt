@@ -34,7 +34,6 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     contacts.postValue(it)
-                    Log.i("Alorma", it.toString())
                 }, {
 
                 })
@@ -86,6 +85,7 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     contactDeleted.postValue(Any())
+                    loadContacts()
                 }, {
 
                 })
