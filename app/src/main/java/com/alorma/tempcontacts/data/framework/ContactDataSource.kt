@@ -1,9 +1,9 @@
 package com.alorma.tempcontacts.data.framework
 
+import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
-import android.util.Log
 import com.alorma.tempcontacts.domain.model.Contact
 import io.reactivex.Completable
 import io.reactivex.Maybe
@@ -34,6 +34,9 @@ class ContactDataSource @Inject constructor(private val context: Context) {
                     }
 
     fun delete(it: Contact): Completable = Completable.complete().doOnComplete {
-        Log.i("Alorma-Delete", "System delete")
+        val uri = ContentUris.appendId(ContactsContract.Contacts.CONTENT_URI.buildUpon(),
+                it.androidId.toLong()).build()
+
+        context.contentResolver.delete(uri, null, null)
     }
 }
