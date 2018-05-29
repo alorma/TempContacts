@@ -6,7 +6,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 'android-P'
     defaultConfig {
-        applicationId "com.alorma.contactnotes"
+        applicationId "com.alorma.tempcontacts"
         minSdkVersion 21
         targetSdkVersion 'P'
         versionCode 1
