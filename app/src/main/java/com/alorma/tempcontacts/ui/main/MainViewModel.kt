@@ -20,6 +20,7 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
 
     private lateinit var contactUri: MutableLiveData<Contact>
     private lateinit var contacts: MutableLiveData<List<Contact>>
+    private lateinit var contactDeleted: MutableLiveData<Any>
 
     private lateinit var permissionBuilder: PermissionBuilder
 
@@ -70,10 +71,25 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe({
                         contactUri.postValue(it)
-                        loadContacts()
                     }, {
 
                     })
         }
+    }
+
+    fun delete(it: Contact): LiveData<Any> {
+        if (!::contactDeleted.isInitialized) {
+            contactDeleted = MutableLiveData()
+        }
+        contactRepository.delete(it)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    contactDeleted.postValue(Any())
+                }, {
+
+                })
+
+        return contactDeleted
     }
 }
