@@ -23,7 +23,7 @@ class ContactsListActivity : AppCompatActivity() {
         viewModel.load()
     }
 
-    private fun onState(it: ContactsList.State) {
+    private fun onState(it: ContactsList.ContactsState) {
         Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
     }
 }

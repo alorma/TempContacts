@@ -1,16 +1,26 @@
 package com.alorma.tempcontacts.ui.contacts
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import com.alorma.tempcontacts.di.DataModule
+import com.alorma.tempcontacts.domain.repository.ContactRepository
+import com.alorma.tempcontacts.ui.common.BaseViewModel
+import io.reactivex.Scheduler
+import javax.inject.Named
 
-class ContactsListViewModel(private val operations: ContactsList) : ViewModel() {
-
-    private val dataContacts: MutableLiveData<ContactsList.State> = MutableLiveData()
-
-    fun subscribe(): LiveData<ContactsList.State> = dataContacts
+class ContactsListViewModel(private val operations: ContactsList,
+                            private val contactRepository: ContactRepository,
+                            @Named(DataModule.IO) private val io: Scheduler,
+                            @Named(DataModule.IO) private val main: Scheduler) :
+        BaseViewModel<ContactsList.ContactsState>() {
 
     fun load() {
-        dataContacts.postValue(operations.dummy())
+        val disposable = contactRepository()
+                .subscribeOn(io)
+                .observeOn(main)
+                .subscribe({
+                    render(operations.items(it))
+                }, {
+
+                })
+        add(disposable)
     }
 }

@@ -6,17 +6,34 @@ import com.alorma.tempcontacts.data.cache.AppDatabase
 import com.alorma.tempcontacts.data.cache.ContactDao
 import dagger.Module
 import dagger.Provides
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
+import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 class DataModule(private val context: Context) {
 
+    companion object {
+        const val IO = "io"
+        const val MAIN = "main"
+    }
+
     @Provides
-    fun proviesDatabase(): AppDatabase =
+    fun providesDatabase(): AppDatabase =
             Room.databaseBuilder(context, AppDatabase::class.java, "database")
                     .build()
 
     @Singleton
     @Provides
-    fun proideContactsDao(appDatabase: AppDatabase): ContactDao = appDatabase.contactDao()
+    fun providesContactsDao(appDatabase: AppDatabase): ContactDao = appDatabase.contactDao()
+
+    @Named(IO)
+    @Provides
+    fun provideIOScheduler(): Scheduler = Schedulers.io()
+
+    @Named(MAIN)
+    @Provides
+    fun provideMainScheduler(): Scheduler = AndroidSchedulers.mainThread()
 }
