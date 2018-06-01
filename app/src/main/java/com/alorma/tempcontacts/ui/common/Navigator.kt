@@ -1,13 +1,12 @@
 package com.alorma.tempcontacts.ui.common
 
 import android.content.Intent
-import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 
-open class Navigator(private val fragment: Fragment) {
+open class Navigator(private val activity: FragmentActivity) {
 
-    fun start(intent: Intent) = fragment.startActivity(intent)
+    fun start(intent: Intent) = activity.startActivity(intent)
 
     fun startForResult(intent: Intent, requestCode: Int) =
-            fragment.startActivityForResult(intent, requestCode)
-
+            activity.startActivityForResult(intent, requestCode)
 }

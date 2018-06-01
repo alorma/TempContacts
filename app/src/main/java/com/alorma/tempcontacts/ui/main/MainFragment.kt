@@ -30,7 +30,7 @@ class MainFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.let {
-            component add MainModule(it, this) inject this
+            component add MainModule(it) inject this
 
             viewModel.setupPermission({
                 Toast.makeText(context, "Deny", Toast.LENGTH_SHORT).show()
