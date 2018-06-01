@@ -6,8 +6,16 @@ import javax.inject.Inject
 
 class ContactsList @Inject constructor() {
     sealed class ContactsState : State() {
+        object Loading : ContactsState()
+        object Empty : ContactsState()
         data class Items(val items: List<Contact>) : ContactsState()
     }
 
-    fun items(it: List<Contact>): ContactsState = ContactsState.Items(it)
+    fun loading(): ContactsState = ContactsState.Loading
+
+    fun items(it: List<Contact>): ContactsState = if (it.isEmpty()) {
+        ContactsState.Empty
+    } else {
+        ContactsState.Items(it)
+    }
 }

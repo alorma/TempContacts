@@ -16,6 +16,7 @@ class ContactsListViewModel(private val operations: ContactsList,
         val disposable = contactRepository()
                 .subscribeOn(io)
                 .observeOn(main)
+                .doOnSubscribe { render(operations.loading()) }
                 .subscribe({
                     render(operations.items(it))
                 }, {
