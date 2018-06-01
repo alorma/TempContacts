@@ -2,7 +2,6 @@ package com.alorma.tempcontacts.ui.main
 
 import android.Manifest
 import android.content.Intent
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -91,5 +90,10 @@ class MainViewModel(private val permission: DexterBuilder.Permission,
                 })
 
         return contactDeleted
+    }
+
+    fun create(it: String) {
+        contactUri = MutableLiveData()
+        permissionBuilder.check()
     }
 }

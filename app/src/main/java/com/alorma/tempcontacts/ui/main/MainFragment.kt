@@ -10,9 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import com.alorma.tempcontacts.domain.model.Contact
 import kotlinx.android.synthetic.main.main_fragment.*
-import kotlinx.android.synthetic.main.main_fragment.view.*
 import javax.inject.Inject
 
 class MainFragment : Fragment() {
@@ -47,24 +45,10 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        view.fab.setOnClickListener {
-            viewModel.getNewContact().observe(this@MainFragment, Observer {
-                it?.let {
-                    onContactLoaded(it)
-                }
-            })
-        }
-    }
-
-    private fun onContactLoaded(contact: Contact) {
-        contactName.text = contact.name
-        contactDelete.visibility = View.VISIBLE
-        contactDelete.setOnClickListener {
-            viewModel.delete(contact).observe(this, Observer {
-                contactName.text = ""
-                contactDelete.visibility = View.INVISIBLE
-                Toast.makeText(context, "Contact deleted", Toast.LENGTH_SHORT).show()
-            })
+        contactCreate.setOnClickListener {
+            contactName.editText?.text.takeIf { !it.isNullOrBlank() }?.toString()?.let {
+                viewModel.create(it)
+            }
         }
     }
 
