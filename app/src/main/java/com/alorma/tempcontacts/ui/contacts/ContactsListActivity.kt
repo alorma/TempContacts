@@ -1,6 +1,7 @@
 package com.alorma.tempcontacts.ui.contacts
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.alorma.tempcontacts.R
@@ -22,15 +23,20 @@ class ContactsListActivity : AppCompatActivity() {
 
         component add ContactsListModule(this) inject this
 
-        viewModel.subscribe().observe(this, Observer {
+        viewModel.subscribe(this, Observer {
             it?.let { onState(it) }
         })
-        viewModel.load()
 
         fab.setOnClickListener { navigator.openCreateContact() }
     }
 
     private fun onState(it: ContactsList.ContactsState) {
+        when (it) {
+            is ContactsList.ContactsState.Items -> onItems(it)
+        }
+    }
 
+    private fun onItems(it: ContactsList.ContactsState.Items) {
+        Toast.makeText(this, it.toString(), Toast.LENGTH_SHORT).show()
     }
 }

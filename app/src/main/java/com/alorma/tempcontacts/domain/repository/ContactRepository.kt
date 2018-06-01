@@ -2,6 +2,7 @@ package com.alorma.tempcontacts.domain.repository
 
 import android.net.Uri
 import com.alorma.tempcontacts.domain.model.Contact
+import com.alorma.tempcontacts.domain.model.CreateContact
 import io.reactivex.Completable
 import io.reactivex.Maybe
 import javax.inject.Inject
@@ -21,4 +22,6 @@ class ContactRepository @Inject constructor(
     fun delete(it: Contact): Completable = system.delete(it).concatWith(cache.delete(it))
 
     fun delete(it: Uri): Completable = system.delete(it)
+
+    fun create(createContact: CreateContact): Completable = cache.save(createContact)
 }

@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey
 data class ContactEntity(
         @PrimaryKey val id: Long? = null,
         @ColumnInfo(name = "androidId") val androidId: String,
-        @ColumnInfo(name = "name") val name: String) {
+        @ColumnInfo(name = "name") val name: String,
+        @ColumnInfo(name = "deleteTime") val time: Long) {
 
     companion object {
         const val TABLE_NAME = "contacts"

@@ -30,7 +30,7 @@ class ContactDataSource @Inject constructor(private val context: Context) {
 
                         it.close()
 
-                        Contact(null, id, name)
+                        Contact(null, id, name, 0)
                     }
 
     fun delete(it: Contact): Completable = Completable.complete().doOnComplete {

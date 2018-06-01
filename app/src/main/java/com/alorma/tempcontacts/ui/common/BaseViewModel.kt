@@ -1,17 +1,19 @@
 package com.alorma.tempcontacts.ui.common
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-open class BaseViewModel<A : State> : ViewModel() {
+open class BaseViewModel<A : State> : ViewModel(), LifecycleObserver {
 
     private val liveData: MutableLiveData<A> = MutableLiveData()
     private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
-    fun subscribe(): LiveData<A> = liveData
+    fun subscribe(owner: LifecycleOwner, observer: Observer<in A>): LiveData<A> {
+        owner.lifecycle.addObserver(this)
+        liveData.observe(owner, observer)
+        return liveData
+    }
 
     protected fun render(a: A) = liveData.postValue(a)
 

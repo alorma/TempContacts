@@ -49,7 +49,7 @@ class NewContactActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.subscribe().observe(this, Observer {
+        viewModel.subscribe(this, Observer {
             it?.let { onState(it) }
         })
     }
@@ -57,11 +57,19 @@ class NewContactActivity : AppCompatActivity() {
     private fun onState(it: NewContact.NewState) {
         when (it) {
             is NewContact.NewState.ContactImport -> showImportContact(it)
+            NewContact.NewState.Complete -> finish()
         }
     }
 
     private fun showImportContact(it: NewContact.NewState.ContactImport) {
+        val contact = it.contact
 
+        contactInfo.visibility = View.VISIBLE
+        contactName.text = contact.name
+
+        saveButton.setOnClickListener {
+            viewModel.save(contact)
+        }
     }
 
     private fun executePermission(onGrantedDo: () -> Unit) {
