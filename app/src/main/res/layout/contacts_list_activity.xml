@@ -29,6 +29,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/ic_person_add"
         app:fabSize="normal"
+        android:tint="@color/white"
         app:layout_anchor="@id/bar" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -39,4 +39,8 @@ class ContactDataSource @Inject constructor(private val context: Context) {
 
         context.contentResolver.delete(uri, null, null)
     }
+
+    fun delete(uri: Uri): Completable = Completable.complete().doOnComplete {
+        context.contentResolver.delete(uri, null, null)
+    }
 }

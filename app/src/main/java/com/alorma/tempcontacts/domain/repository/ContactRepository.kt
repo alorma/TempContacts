@@ -14,10 +14,11 @@ class ContactRepository @Inject constructor(
 
     operator fun invoke(): Maybe<List<Contact>> = cache()
 
-    operator fun invoke(uri: Uri): Maybe<Contact> = system.invoke(uri)
-            .doOnSuccess { cache.save(it) }.flatMap { cache.invoke(it.androidId) }
+    fun import(uri: Uri): Maybe<Contact> = system.invoke(uri)
 
     operator fun invoke(id: Long): Maybe<Contact> = cache(id)
 
     fun delete(it: Contact): Completable = system.delete(it).concatWith(cache.delete(it))
+
+    fun delete(it: Uri): Completable = system.delete(it)
 }
