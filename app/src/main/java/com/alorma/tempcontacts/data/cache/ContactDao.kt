@@ -23,6 +23,6 @@ interface ContactDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(vararg contactEntity: ContactEntity)
 
-    @Delete
-    fun delete(user: ContactEntity)
+    @Query("DELETE FROM ${ContactEntity.TABLE_NAME} WHERE id = :androidId")
+    fun delete(androidId: String)
 }

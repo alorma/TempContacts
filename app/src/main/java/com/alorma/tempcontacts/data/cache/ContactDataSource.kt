@@ -25,7 +25,7 @@ class ContactDataSource @Inject constructor(
         }
     }
 
-    fun delete(it: Contact): Completable = Completable.fromAction {
-        contactDao.delete(mapper(it))
+    fun delete(androidId: String) {
+        contactDao.delete(androidId)
     }
 }

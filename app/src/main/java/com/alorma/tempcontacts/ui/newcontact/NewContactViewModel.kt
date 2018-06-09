@@ -1,15 +1,20 @@
 package com.alorma.tempcontacts.ui.newcontact
 
 import android.net.Uri
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.alorma.tempcontacts.di.DataModule
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.domain.model.CreateContact
 import com.alorma.tempcontacts.domain.repository.ContactRepository
+import com.alorma.tempcontacts.domain.work.DeleteSingleContactWorker
 import com.alorma.tempcontacts.ui.common.BaseViewModel
 import io.reactivex.Scheduler
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Named
+
 
 class NewContactViewModel @Inject constructor(
         private val options: NewContact,
@@ -47,12 +52,25 @@ class NewContactViewModel @Inject constructor(
                 .subscribeOn(io)
                 .observeOn(main)
                 .subscribe({
-                    render(options.saveComplete())
+                    schedule(contact.androidId, time)
                 }, {
 
                 })
 
         add(disposable)
+    }
+
+    private fun schedule(androidId: String, time: Long) {
+        val currentTime = System.currentTimeMillis()
+        val delayed = time - currentTime
+        val data = Data.Builder()
+                .putString(DeleteSingleContactWorker.ANDROID_ID, androidId)
+                .build()
+        val compressionWork = OneTimeWorkRequest.Builder(DeleteSingleContactWorker::class.java)
+                .setInputData(data)
+                .setInitialDelay(delayed, TimeUnit.MILLISECONDS)
+                .build()
+        WorkManager.getInstance().enqueue(compressionWork)
     }
 
 }

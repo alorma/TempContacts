@@ -19,7 +19,10 @@ class ContactRepository @Inject constructor(
 
     operator fun invoke(id: Long): Maybe<Contact> = cache(id)
 
-    fun delete(it: Contact): Completable = system.delete(it).concatWith(cache.delete(it))
+    fun delete(androidId: String) {
+        system.delete(androidId)
+        cache.delete(androidId)
+    }
 
     fun delete(it: Uri): Completable = system.delete(it)
 

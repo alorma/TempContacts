@@ -33,14 +33,14 @@ class ContactDataSource @Inject constructor(private val context: Context) {
                         Contact(null, id, name, 0)
                     }
 
-    fun delete(it: Contact): Completable = Completable.complete().doOnComplete {
+    fun delete(androidId: String) {
         val uri = ContentUris.appendId(ContactsContract.Contacts.CONTENT_URI.buildUpon(),
-                it.androidId.toLong()).build()
+                androidId.toLong()).build()
 
         context.contentResolver.delete(uri, null, null)
     }
 
-    fun delete(uri: Uri): Completable = Completable.complete().doOnComplete {
+    fun delete(uri: Uri): Completable = Completable.fromAction {
         context.contentResolver.delete(uri, null, null)
     }
 }
