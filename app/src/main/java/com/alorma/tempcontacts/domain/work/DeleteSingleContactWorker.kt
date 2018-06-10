@@ -1,10 +1,9 @@
 package com.alorma.tempcontacts.domain.work
 
-import android.util.Log
-import androidx.work.Worker
 import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
 import com.alorma.tempcontacts.data.framework.ContactDataSource as System
 
+/*
 class DeleteSingleContactWorker : Worker() {
 
     companion object {
@@ -29,3 +28,4 @@ class DeleteSingleContactWorker : Worker() {
         system.delete(id)
     }
 }
+        */

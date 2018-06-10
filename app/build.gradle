@@ -51,9 +51,11 @@ dependencies {
 
     implementation 'androidx.lifecycle:lifecycle-common:2.0.0-alpha1'
 
+    /*
     implementation 'android.arch.work:work-runtime:1.0.0-alpha02'
     implementation 'android.arch.work:work-firebase:1.0.0-alpha02'
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+    */
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.1.0-alpha3'

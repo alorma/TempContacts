@@ -5,13 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.ConstraintLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clipToPadding="false"
-        android:paddingBottom="?actionBarSize">
-
-    </androidx.constraintlayout.ConstraintLayout>
+        android:id="@+id/recycler"/>
 
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bar"
