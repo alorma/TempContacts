@@ -13,11 +13,9 @@ class ContactRepository @Inject constructor(
         private val system: System,
         private val cache: Cache) {
 
-    operator fun invoke(): Maybe<List<Contact>> = cache()
+    fun load(): Maybe<List<Contact>> = cache()
 
     fun import(uri: Uri): Maybe<Contact> = system.invoke(uri)
-
-    operator fun invoke(id: Long): Maybe<Contact> = cache(id)
 
     fun delete(androidId: String) {
         system.delete(androidId)

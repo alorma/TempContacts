@@ -30,7 +30,7 @@ class ContactDataSource @Inject constructor(private val context: Context) {
 
                         it.close()
 
-                        Contact(null, id, name, 0)
+                        Contact( id, name, 0)
                     }
 
     fun delete(androidId: String) {

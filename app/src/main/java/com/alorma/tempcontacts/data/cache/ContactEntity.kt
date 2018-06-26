@@ -6,8 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = ContactEntity.TABLE_NAME)
 data class ContactEntity(
-        @PrimaryKey val id: Long? = null,
-        @ColumnInfo(name = "androidId") val androidId: String,
+        @PrimaryKey val id: String,
         @ColumnInfo(name = "name") val name: String,
         @ColumnInfo(name = "deleteTime") val time: Long) {
 

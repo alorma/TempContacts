@@ -68,7 +68,16 @@ class NewContactActivity : AppCompatActivity() {
         contactName.text = contact.name
 
         saveButton.setOnClickListener {
-            viewModel.save(contact)
+            val time = when (timeSelector.checkedChipId) {
+                R.id.time1Hour -> TimeSelection.HOUR
+                R.id.time1Day -> TimeSelection.DAY
+                R.id.time1Week -> TimeSelection.WEEK
+                R.id.time1Month -> TimeSelection.MONTH
+                R.id.timeOther -> TimeSelection.OTHER
+                else -> TimeSelection.NONE
+            }
+
+            viewModel.save(contact, time)
         }
     }
 

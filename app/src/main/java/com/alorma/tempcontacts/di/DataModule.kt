@@ -2,6 +2,7 @@ package com.alorma.tempcontacts.di
 
 import android.content.Context
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.alorma.tempcontacts.data.cache.AppDatabase
 import com.alorma.tempcontacts.data.cache.ContactDao
 import dagger.Module
@@ -37,8 +38,6 @@ class DataModule(private val context: Context) {
     @Provides
     fun provideMainScheduler(): Scheduler = AndroidSchedulers.mainThread()
 
-    /*
     @Provides
     fun provideWorkManager(): WorkManager = WorkManager.getInstance()
-    */
 }

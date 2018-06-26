@@ -18,7 +18,7 @@ class NewContactViewModel @Inject constructor(
         private val contactRepository: ContactRepository,
         private val scheduleRemoveTask: RemoveContactTask,
         @Named(DataModule.IO) private val io: Scheduler,
-        @Named(DataModule.IO) private val main: Scheduler) :
+        @Named(DataModule.MAIN) private val main: Scheduler) :
         BaseViewModel<NewContact.NewState>() {
 
     fun onContact(uri: Uri) {
@@ -42,21 +42,39 @@ class NewContactViewModel @Inject constructor(
                 }))
     }
 
-    fun save(contact: Contact) {
-        val time = System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(1)
-        val createContact = CreateContact(contact.androidId, contact.name, time)
+    fun save(contact: Contact, time: TimeSelection) {
+        if (time != TimeSelection.NONE) {
+            saveOnValidTime(time, contact)
+        } else {
+            render(options.invalidTime())
+        }
+    }
+
+    private fun saveOnValidTime(time: TimeSelection, contact: Contact) {
+        val timeCalculation = getTime(time)
+
+        val createContact = CreateContact(contact.androidId, contact.name, timeCalculation)
 
         val disposable = contactRepository.create(createContact)
                 .subscribeOn(io)
                 .observeOn(main)
                 .subscribe({
-                    schedule(contact.androidId, time)
+                    schedule(contact.androidId, timeCalculation)
                     render(options.saveComplete())
                 }, {
 
                 })
 
         add(disposable)
+    }
+
+    private fun getTime(time: TimeSelection): Long = when (time) {
+        TimeSelection.HOUR -> TimeUnit.HOURS.toMillis(1)
+        TimeSelection.DAY -> TimeUnit.DAYS.toMillis(1)
+        TimeSelection.WEEK -> TimeUnit.DAYS.toMillis(7)
+        TimeSelection.MONTH -> TimeUnit.DAYS.toMillis(30)
+        is TimeSelection.Custom -> time.number * getTime(time.type)
+        else -> 0
     }
 
     private fun schedule(androidId: String, time: Long) = scheduleRemoveTask(androidId, time)

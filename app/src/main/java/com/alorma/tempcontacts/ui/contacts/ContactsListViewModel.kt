@@ -23,7 +23,7 @@ class ContactsListViewModel(private val operations: ContactsList,
     }
 
     private fun load() {
-        val disposable = contactRepository()
+        val disposable = contactRepository.load()
                 .subscribeOn(io)
                 .observeOn(main)
                 .doOnSubscribe { render(operations.loading()) }

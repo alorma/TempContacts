@@ -1,31 +1,34 @@
 package com.alorma.tempcontacts.domain.work
 
+import androidx.work.Worker
+import com.alorma.tempcontacts.TempContactsApp.Companion.component
+import com.alorma.tempcontacts.domain.repository.ContactRepository
+import javax.inject.Inject
 import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
 import com.alorma.tempcontacts.data.framework.ContactDataSource as System
 
-/*
 class DeleteSingleContactWorker : Worker() {
 
     companion object {
         const val ANDROID_ID = "android_id"
     }
 
-    override fun doWork(): WorkerResult {
+    @Inject
+    lateinit var contactRepository: ContactRepository
+
+    override fun doWork(): Result {
+        component inject this
+
         val androidId = inputData.getString(ANDROID_ID, null)
 
         androidId?.let {
-            deleteContact(androidId, it)
+            deleteContact(it)
         }
 
-        return WorkerResult.SUCCESS
+        return Result.SUCCESS
     }
 
-    private fun deleteContact(androidId: String?, id: String) {
-        Log.i("Delete contact", androidId)
-
-        val system = System(applicationContext)
-
-        system.delete(id)
+    private fun deleteContact(androidId: String) {
+        contactRepository.delete(androidId)
     }
 }
-        */

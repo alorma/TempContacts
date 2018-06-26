@@ -1,7 +1,8 @@
 package com.alorma.tempcontacts.domain.work
 
-/*
-class TestWorker: Worker() {
-    override fun doWork(): WorkerResult = WorkerResult.SUCCESS
+import androidx.work.Worker
+
+
+class TestWorker : Worker() {
+    override fun doWork(): Result = Result.SUCCESS
 }
-        */
