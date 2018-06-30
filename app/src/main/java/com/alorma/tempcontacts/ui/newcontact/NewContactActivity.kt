@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
+import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.dsl.dsl
 import com.karumi.dexter.DexterBuilder
 import kotlinx.android.synthetic.main.new_contact_activity.*
@@ -48,22 +49,9 @@ class NewContactActivity : AppCompatActivity() {
                 navigator.importContact()
             }
         }
-
-        viewModel.subscribe(this, Observer {
-            it?.let { onState(it) }
-        })
     }
 
-    private fun onState(it: NewContact.NewState) {
-        when (it) {
-            is NewContact.NewState.ContactImport -> showImportContact(it)
-            NewContact.NewState.Complete -> finish()
-        }
-    }
-
-    private fun showImportContact(it: NewContact.NewState.ContactImport) {
-        val contact = it.contact
-
+    private fun showImportContact(contact: Contact) {
         contactInfo.visibility = View.VISIBLE
         contactName.text = contact.name
 
@@ -77,7 +65,14 @@ class NewContactActivity : AppCompatActivity() {
                 else -> TimeSelection.NONE
             }
 
-            viewModel.save(contact, time)
+            viewModel.save(contact, time).observe(this, Observer {
+                it?.let {
+                    when (it) {
+                        NewContact.NewState.InvalidTime -> Toast.makeText(this@NewContactActivity, "No time selected", Toast.LENGTH_SHORT).show()
+                        NewContact.NewState.Complete -> finish()
+                    }
+                }
+            })
         }
     }
 
@@ -103,7 +98,9 @@ class NewContactActivity : AppCompatActivity() {
 
         navigator.parse(data)?.let {
             buttons.visibility = View.GONE
-            viewModel.onContact(it)
+            viewModel.onContact(it).observe(this, Observer {
+                it?.let { showImportContact(it) }
+            })
             if (createContact) this.uri = it
         }
     }

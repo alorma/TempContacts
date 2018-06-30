@@ -29,7 +29,7 @@ class ContactsListActivity : AppCompatActivity() {
 
         component add ContactsListModule(this) inject this
 
-        viewModel.subscribe(this, Observer {
+        viewModel.contacts.observe(this, Observer {
             it?.let { onState(it) }
         })
 

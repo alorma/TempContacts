@@ -4,19 +4,16 @@ import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.alorma.tempcontacts.domain.model.Contact
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import javax.inject.Inject
 
 class ContactDataSource @Inject constructor(private val context: Context) {
 
-    operator fun invoke(contactUri: Uri): Maybe<Contact> {
-        return Maybe.defer {
-            getContact(contactUri)?.let {
-                Maybe.just(it)
-            } ?: Maybe.empty<Contact>()
-        }
+    fun loadContact(contactUri: Uri): LiveData<Contact?> = MutableLiveData<Contact?>().apply {
+        postValue(getContact(contactUri))
     }
 
     private fun getContact(contactUri: Uri): Contact? =
@@ -30,7 +27,7 @@ class ContactDataSource @Inject constructor(private val context: Context) {
 
                         it.close()
 
-                        Contact( id, name, 0)
+                        Contact(id, name, 0)
                     }
 
     fun delete(androidId: String) {

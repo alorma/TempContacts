@@ -1,10 +1,10 @@
 package com.alorma.tempcontacts.domain.repository
 
 import android.net.Uri
+import androidx.lifecycle.LiveData
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.domain.model.CreateContact
 import io.reactivex.Completable
-import io.reactivex.Maybe
 import javax.inject.Inject
 import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
 import com.alorma.tempcontacts.data.framework.ContactDataSource as System
@@ -13,9 +13,9 @@ class ContactRepository @Inject constructor(
         private val system: System,
         private val cache: Cache) {
 
-    fun load(): Maybe<List<Contact>> = cache()
+    fun load(): LiveData<List<Contact>> = cache.load()
 
-    fun import(uri: Uri): Maybe<Contact> = system.invoke(uri)
+    fun import(uri: Uri): LiveData<Contact?> = system.loadContact(uri)
 
     fun delete(androidId: String) {
         system.delete(androidId)
@@ -24,5 +24,5 @@ class ContactRepository @Inject constructor(
 
     fun delete(it: Uri): Completable = system.delete(it)
 
-    fun create(createContact: CreateContact): Completable = cache.save(createContact)
+    fun create(createContact: CreateContact) = cache.save(createContact)
 }

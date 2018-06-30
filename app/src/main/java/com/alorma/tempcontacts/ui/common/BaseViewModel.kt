@@ -6,7 +6,7 @@ import io.reactivex.disposables.Disposable
 
 open class BaseViewModel<A : State> : ViewModel(), LifecycleObserver {
 
-    private val liveData: MutableLiveData<A> = MutableLiveData()
+    protected val liveData: MutableLiveData<A> = MutableLiveData()
     private val disposable: CompositeDisposable by lazy { CompositeDisposable() }
 
     fun subscribe(owner: LifecycleOwner, observer: Observer<in A>): LiveData<A> {

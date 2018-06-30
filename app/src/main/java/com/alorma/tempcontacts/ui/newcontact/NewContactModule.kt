@@ -2,6 +2,7 @@ package com.alorma.tempcontacts.ui.newcontact
 
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.get
 import com.alorma.tempcontacts.di.ScreenModule
 import dagger.Module
 import dagger.Provides
@@ -11,6 +12,6 @@ class NewContactModule(private val activity: FragmentActivity) : ScreenModule(ac
 
     @Provides
     fun provideViewModel(factory: NewContactViewModelFactory): NewContactViewModel =
-            ViewModelProviders.of(activity, factory).get(NewContactViewModel::class.java)
+            ViewModelProviders.of(activity, factory).get()
 
 }
