@@ -11,8 +11,4 @@ class ActionLiveData<T>(private val func: () -> T) : LiveData<T>() {
             }
         }.start()
     }
-
-    override fun onInactive() {
-        super.onInactive()
-    }
 }

@@ -7,7 +7,6 @@ import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alorma.tempcontacts.domain.model.Contact
-import io.reactivex.Completable
 import javax.inject.Inject
 
 class ContactDataSource @Inject constructor(private val context: Context) {
@@ -37,7 +36,7 @@ class ContactDataSource @Inject constructor(private val context: Context) {
         context.contentResolver.delete(uri, null, null)
     }
 
-    fun delete(uri: Uri): Completable = Completable.fromAction {
+    fun delete(uri: Uri) {
         context.contentResolver.delete(uri, null, null)
     }
 }

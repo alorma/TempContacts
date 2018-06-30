@@ -104,11 +104,4 @@ class NewContactActivity : AppCompatActivity() {
             if (createContact) this.uri = it
         }
     }
-
-    override fun onBackPressed() {
-        this.uri?.let {
-            viewModel.removeNonFinishedUser(it)
-        }
-        super.onBackPressed()
-    }
 }

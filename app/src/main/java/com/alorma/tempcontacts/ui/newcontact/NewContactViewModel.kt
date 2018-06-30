@@ -5,24 +5,19 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.alorma.tempcontacts.data.ActionLiveData
-import com.alorma.tempcontacts.di.DataModule
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.domain.model.CreateContact
 import com.alorma.tempcontacts.domain.repository.ContactRepository
 import com.alorma.tempcontacts.domain.work.RemoveContactTask
 import com.alorma.tempcontacts.ui.common.BaseViewModel
-import io.reactivex.Scheduler
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import javax.inject.Named
 
 
 class NewContactViewModel @Inject constructor(
         private val options: NewContact,
         private val contactRepository: ContactRepository,
-        private val scheduleRemoveTask: RemoveContactTask,
-        @Named(DataModule.IO) private val io: Scheduler,
-        @Named(DataModule.MAIN) private val main: Scheduler) :
+        private val scheduleRemoveTask: RemoveContactTask) :
         BaseViewModel<NewContact.NewState>() {
 
     private val saveLiveData: MutableLiveData<Save> = MutableLiveData()
@@ -61,18 +56,6 @@ class NewContactViewModel @Inject constructor(
         saveLiveData.postValue(saveState)
 
         return saveContact
-    }
-
-
-    fun removeNonFinishedUser(it: Uri) {
-        add(contactRepository.delete(it)
-                .subscribeOn(io)
-                .observeOn(main)
-                .subscribe({
-
-                }, {
-
-                }))
     }
 
     private fun getTime(time: TimeSelection): Long = when (time) {

@@ -22,7 +22,7 @@ class ContactRepository @Inject constructor(
         cache.delete(androidId)
     }
 
-    fun delete(it: Uri): Completable = system.delete(it)
+    fun delete(it: Uri) = system.delete(it)
 
     fun create(createContact: CreateContact) = cache.save(createContact)
 }
