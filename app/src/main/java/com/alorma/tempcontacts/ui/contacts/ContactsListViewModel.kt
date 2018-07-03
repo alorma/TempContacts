@@ -3,17 +3,19 @@ package com.alorma.tempcontacts.ui.contacts
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.Transformations
 import com.alorma.tempcontacts.domain.repository.ContactRepository
 import com.alorma.tempcontacts.domain.work.TestTask
+import com.alorma.tempcontacts.extensions.map
 import com.alorma.tempcontacts.ui.common.BaseViewModel
 
 class ContactsListViewModel(private val operations: ContactsList,
-                            private val contactRepository: ContactRepository,
+                            contactRepository: ContactRepository,
                             private val testTask: TestTask) :
         BaseViewModel<ContactsList.ContactsState>() {
 
-    val contacts: LiveData<ContactsList.ContactsState> = Transformations.map(contactRepository.load()) {
+    val contacts: LiveData<ContactsList.ContactsState> = contactRepository.load().map {
+        operations.mapContacts(it)
+    }.map {
         operations.items(it)
     }
 

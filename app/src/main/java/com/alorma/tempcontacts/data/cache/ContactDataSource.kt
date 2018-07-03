@@ -1,7 +1,6 @@
 package com.alorma.tempcontacts.data.cache
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.domain.model.CreateContact
@@ -13,6 +12,10 @@ class ContactDataSource @Inject constructor(
 
     fun load(): LiveData<List<Contact>> = Transformations.map(contactDao.get()) {
         it.map { mapper.map(it) }
+    }
+
+    fun get(androidId: String): LiveData<Contact> = Transformations.map(contactDao.findById(androidId)) {
+        mapper.map(it)
     }
 
     fun save(it: CreateContact) {

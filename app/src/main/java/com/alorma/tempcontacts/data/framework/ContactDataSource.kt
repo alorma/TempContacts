@@ -30,10 +30,10 @@ class ContactDataSource @Inject constructor(private val context: Context) {
         val uri = ContentUris.appendId(ContactsContract.Contacts.CONTENT_URI.buildUpon(),
                 androidId.toLong()).build()
 
-        context.contentResolver.delete(uri, null, null)
+        delete(uri)
     }
 
-    fun delete(uri: Uri) {
+    private fun delete(uri: Uri) {
         context.contentResolver.delete(uri, null, null)
     }
 }

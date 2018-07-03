@@ -3,12 +3,12 @@ package com.alorma.tempcontacts.ui.newcontact
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.alorma.tempcontacts.data.ActionLiveData
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.domain.model.CreateContact
 import com.alorma.tempcontacts.domain.repository.ContactRepository
 import com.alorma.tempcontacts.domain.work.RemoveContactTask
+import com.alorma.tempcontacts.extensions.actionSwitchMap
+import com.alorma.tempcontacts.extensions.switchMap
 import com.alorma.tempcontacts.ui.common.BaseViewModel
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -22,23 +22,21 @@ class NewContactViewModel @Inject constructor(
 
     private val saveLiveData: MutableLiveData<Save> = MutableLiveData()
 
-    private val saveContact: LiveData<NewContact.NewState> = Transformations.switchMap(saveLiveData) {
-        ActionLiveData {
-            when (it) {
-                NewContactViewModel.Save.InvalidTime -> options.invalidTime()
-                is NewContactViewModel.Save.SaveContact -> {
-                    val timeCalculation = getTime(it.time)
-                    val createContact = CreateContact(it.contact.androidId, it.contact.name, timeCalculation)
-                    contactRepository.create(createContact)
-                    schedule(it.contact.androidId, timeCalculation)
-                    options.saveComplete()
-                }
+    private val saveContact: LiveData<NewContact.NewState> = saveLiveData.actionSwitchMap {
+        when (it) {
+            NewContactViewModel.Save.InvalidTime -> options.invalidTime()
+            is NewContactViewModel.Save.SaveContact -> {
+                val timeCalculation = getTime(it.time)
+                val createContact = CreateContact(it.contact.androidId, it.contact.name, timeCalculation)
+                contactRepository.create(createContact)
+                schedule(it.contact.androidId, timeCalculation)
+                options.saveComplete()
             }
         }
     }
 
     private val uriLiveData: MutableLiveData<Uri> = MutableLiveData()
-    private val getContactLiveData: LiveData<Contact?> = Transformations.switchMap(uriLiveData) {
+    private val getContactLiveData: LiveData<Contact?> = uriLiveData.switchMap {
         contactRepository.import(it)
     }
 

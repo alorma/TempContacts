@@ -13,6 +13,8 @@ class ContactsList @Inject constructor() {
 
     fun loading(): ContactsState = ContactsState.Loading
 
+    fun mapContacts(it: List<Contact>): List<Contact> = it
+
     fun items(it: List<Contact>): ContactsState = if (it.isEmpty()) {
         ContactsState.Empty
     } else {
