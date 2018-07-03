@@ -5,25 +5,21 @@ import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
-import com.alorma.tempcontacts.data.ActionLiveData
 import com.alorma.tempcontacts.domain.model.Contact
+import com.alorma.tempcontacts.extensions.queryExist
+import com.alorma.tempcontacts.extensions.queryFirstLive
 import javax.inject.Inject
 
 class ContactDataSource @Inject constructor(private val context: Context) {
 
-    fun loadContact(contactUri: Uri): LiveData<Contact?> = ActionLiveData {
-        context.contentResolver.query(contactUri, null, null, null, null)
-                .takeIf { it.moveToFirst() }?.let {
-                    val idIndex = it.getColumnIndex(ContactsContract.Contacts._ID)
-                    val nameIndex = it.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+    fun loadContact(contactUri: Uri): LiveData<Contact?> = context.queryFirstLive(contactUri) {
+        val idIndex = getColumnIndex(ContactsContract.Contacts._ID)
+        val nameIndex = getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
 
-                    val id = it.getString(idIndex)
-                    val name = it.getString(nameIndex)
+        val id = getString(idIndex)
+        val name = getString(nameIndex)
 
-                    it.close()
-
-                    Contact(id, name, 0)
-                }
+        Contact(id, name, 0)
     }
 
     fun delete(androidId: String) {
@@ -35,5 +31,12 @@ class ContactDataSource @Inject constructor(private val context: Context) {
 
     private fun delete(uri: Uri) {
         context.contentResolver.delete(uri, null, null)
+    }
+
+    fun exist(androidId: String): Boolean {
+        val uri = ContentUris.appendId(ContactsContract.Contacts.CONTENT_URI.buildUpon(),
+                androidId.toLong()).build()
+
+        return context.queryExist(uri)
     }
 }

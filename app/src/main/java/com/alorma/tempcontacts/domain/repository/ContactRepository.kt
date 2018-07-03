@@ -14,12 +14,16 @@ class ContactRepository @Inject constructor(
 
     fun load(): LiveData<List<Contact>> = cache.load()
 
+    fun loadContacts(): List<Contact> = cache.loadContacts()
+
     fun import(uri: Uri): LiveData<Contact?> = system.loadContact(uri)
 
     fun delete(androidId: String) {
         system.delete(androidId)
         cache.delete(androidId)
     }
+
+    fun exist(contact: Contact) : Boolean = system.exist(contact.androidId)
 
     fun create(createContact: CreateContact) = cache.save(createContact)
 }

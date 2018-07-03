@@ -14,6 +14,8 @@ class ContactDataSource @Inject constructor(
         it.map { mapper.map(it) }
     }
 
+    fun loadContacts(): List<Contact> = contactDao.getList().map { mapper.map(it) }
+
     fun get(androidId: String): LiveData<Contact> = Transformations.map(contactDao.findById(androidId)) {
         mapper.map(it)
     }

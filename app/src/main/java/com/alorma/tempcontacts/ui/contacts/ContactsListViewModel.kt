@@ -4,13 +4,13 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.OnLifecycleEvent
 import com.alorma.tempcontacts.domain.repository.ContactRepository
-import com.alorma.tempcontacts.domain.work.TestTask
+import com.alorma.tempcontacts.domain.work.CheckRemovedContactsTask
 import com.alorma.tempcontacts.extensions.map
 import com.alorma.tempcontacts.ui.common.BaseViewModel
 
 class ContactsListViewModel(private val operations: ContactsList,
                             contactRepository: ContactRepository,
-                            private val testTask: TestTask) :
+                            private val checkRemovedContactsTask: CheckRemovedContactsTask) :
         BaseViewModel<ContactsList.ContactsState>() {
 
     val contacts: LiveData<ContactsList.ContactsState> = contactRepository.load().map {
@@ -21,8 +21,9 @@ class ContactsListViewModel(private val operations: ContactsList,
 
     @OnLifecycleEvent(value = Lifecycle.Event.ON_START)
     fun onStart() {
-        scheduleRemove()
+        scheduleCheckExisting()
     }
 
-    private fun scheduleRemove() = testTask.scheduleRemoveOldContacts()
+    private fun scheduleCheckExisting() = checkRemovedContactsTask.check()
+
 }

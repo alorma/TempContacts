@@ -1,6 +1,7 @@
 package com.alorma.tempcontacts.di
 
 import com.alorma.tempcontacts.domain.work.DeleteSingleContactWorker
+import com.alorma.tempcontacts.domain.work.SyncContactsWorker
 import com.alorma.tempcontacts.ui.contacts.ContactsListComponent
 import com.alorma.tempcontacts.ui.contacts.ContactsListModule
 import com.alorma.tempcontacts.ui.newcontact.NewContactComponent
@@ -15,4 +16,5 @@ interface ApplicationComponent {
     infix fun add(newContactModule: NewContactModule): NewContactComponent
 
     infix fun inject(deleteSingleContactWorker: DeleteSingleContactWorker)
+    infix fun inject(syncContactsWorker: SyncContactsWorker)
 }

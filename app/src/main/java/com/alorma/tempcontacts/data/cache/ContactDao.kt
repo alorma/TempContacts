@@ -8,6 +8,9 @@ interface ContactDao {
     @Query("SELECT * FROM ${ContactEntity.TABLE_NAME}")
     fun get(): LiveData<List<ContactEntity>>
 
+    @Query("SELECT * FROM ${ContactEntity.TABLE_NAME}")
+    fun getList(): List<ContactEntity>
+
     @Query("SELECT * FROM ${ContactEntity.TABLE_NAME} WHERE id LIKE :id LIMIT 1")
     fun findById(id: String): LiveData<ContactEntity>
 
