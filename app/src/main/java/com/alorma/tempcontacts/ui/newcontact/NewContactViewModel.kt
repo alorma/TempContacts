@@ -18,7 +18,7 @@ class NewContactViewModel @Inject constructor(
         private val options: NewContact,
         private val contactRepository: ContactRepository,
         private val scheduleRemoveTask: RemoveContactTask) :
-        BaseViewModel<NewContact.NewState>() {
+        BaseViewModel() {
 
     private val saveLiveData: MutableLiveData<Save> = MutableLiveData()
 

@@ -11,7 +11,7 @@ import com.alorma.tempcontacts.ui.common.BaseViewModel
 class ContactsListViewModel(private val operations: ContactsList,
                             contactRepository: ContactRepository,
                             private val checkRemovedContactsTask: CheckRemovedContactsTask) :
-        BaseViewModel<ContactsList.ContactsState>() {
+        BaseViewModel() {
 
     val contacts: LiveData<ContactsList.ContactsState> = contactRepository.load().map {
         operations.mapContacts(it)

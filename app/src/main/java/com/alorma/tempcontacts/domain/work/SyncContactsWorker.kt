@@ -14,7 +14,10 @@ class SyncContactsWorker : Worker() {
         component inject this
 
         contactRepository.loadContacts().forEach {
-
+            val exist = contactRepository.exist(it)
+            if (!exist) {
+                contactRepository.delete(it.androidId)
+            }
         }
 
         return Result.SUCCESS
