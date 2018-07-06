@@ -11,6 +11,6 @@ data class ContactEntity(
         @ColumnInfo(name = "deleteTime") val time: Long) {
 
     companion object {
-        const val TABLE_NAME = "contacts"
+        const val TABLE_NAME = "documentsMapper"
     }
 }

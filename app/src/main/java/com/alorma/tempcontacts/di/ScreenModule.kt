@@ -10,8 +10,5 @@ import dagger.Provides
 open class ScreenModule(private val fragment: Fragment) {
 
     @Provides
-    fun provideFragment(): Fragment = fragment
-
-    @Provides
     fun providesPermission(): DexterBuilder.Permission = Dexter.withActivity(fragment.activity)
 }

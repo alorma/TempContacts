@@ -1,10 +1,10 @@
-package com.alorma.tempcontacts.ui.contacts
+package com.alorma.tempcontacts.ui.documents
 
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.ui.common.State
 import javax.inject.Inject
 
-class ContactsList @Inject constructor() {
+class DocumentsListMapper @Inject constructor() {
     sealed class ContactsState : State() {
         object Loading : ContactsState()
         object Empty : ContactsState()

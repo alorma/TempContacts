@@ -1,9 +1,9 @@
-package com.alorma.tempcontacts.ui.newcontact
+package com.alorma.tempcontacts.ui.create
 
 import com.alorma.tempcontacts.ui.common.State
 import javax.inject.Inject
 
-class NewContact @Inject constructor() {
+class CreateDocumentMapper @Inject constructor() {
     sealed class NewState : State() {
         object InvalidTime : NewState()
         object Complete : NewState()

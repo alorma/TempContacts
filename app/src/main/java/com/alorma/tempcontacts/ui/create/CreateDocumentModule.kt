@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.contacts
+package com.alorma.tempcontacts.ui.create
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
@@ -8,10 +8,10 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class ContactsListModule(private val fragment: Fragment) : ScreenModule(fragment) {
+class CreateDocumentModule(private val fragment: Fragment) : ScreenModule(fragment) {
 
     @Provides
-    fun provideViewModel(factory: ContactsListViewModelFactory): ContactsListViewModel =
+    fun provideViewModel(factory: CreateDocumentViewModelFactory): CreateDocumentViewModel =
             ViewModelProviders.of(fragment, factory).get()
 
 }

@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.newcontact
+package com.alorma.tempcontacts.ui.create
 
 sealed class TimeSelection {
     object HOUR : TimeSelection()

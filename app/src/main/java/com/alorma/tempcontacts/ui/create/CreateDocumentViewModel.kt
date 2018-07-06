@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.newcontact
+package com.alorma.tempcontacts.ui.create
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -14,18 +14,18 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class NewContactViewModel @Inject constructor(
-        private val options: NewContact,
+class CreateDocumentViewModel @Inject constructor(
+        private val options: CreateDocumentMapper,
         private val contactRepository: ContactRepository,
         private val scheduleRemoveTask: RemoveContactTask) :
         BaseViewModel() {
 
     private val saveLiveData: MutableLiveData<Save> = MutableLiveData()
 
-    private val saveContact: LiveData<NewContact.NewState> = saveLiveData.actionSwitchMap {
+    private val saveContact: LiveData<CreateDocumentMapper.NewState> = saveLiveData.actionSwitchMap {
         when (it) {
-            NewContactViewModel.Save.InvalidTime -> options.invalidTime()
-            is NewContactViewModel.Save.SaveContact -> {
+            Save.InvalidTime -> options.invalidTime()
+            is Save.SaveContact -> {
                 val timeCalculation = getTime(it.time)
                 val createContact = CreateContact(it.contact.androidId, it.contact.name, timeCalculation)
                 contactRepository.create(createContact)
@@ -45,7 +45,7 @@ class NewContactViewModel @Inject constructor(
         return getContactLiveData
     }
 
-    fun save(contact: Contact, time: TimeSelection): LiveData<NewContact.NewState> {
+    fun save(contact: Contact, time: TimeSelection): LiveData<CreateDocumentMapper.NewState> {
         val saveState = if (time == TimeSelection.NONE) {
             Save.InvalidTime
         } else {

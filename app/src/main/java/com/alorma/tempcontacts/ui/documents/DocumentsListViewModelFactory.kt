@@ -1,18 +1,17 @@
-package com.alorma.tempcontacts.ui.contacts
+package com.alorma.tempcontacts.ui.documents
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.alorma.tempcontacts.domain.repository.ContactRepository
 import com.alorma.tempcontacts.domain.work.CheckRemovedContactsTask
-import com.alorma.tempcontacts.domain.work.TestTask
 import javax.inject.Inject
 
-class ContactsListViewModelFactory @Inject constructor(
-        private val operations: ContactsList,
+class DocumentsListViewModelFactory @Inject constructor(
+        private val operations: DocumentsListMapper,
         private val contactRepository: ContactRepository,
         private val tasker: CheckRemovedContactsTask
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            ContactsListViewModel(operations, contactRepository, tasker) as T
+            DocumentsListViewModel(operations, contactRepository, tasker) as T
 }

@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.contacts
+package com.alorma.tempcontacts.ui.documents
 
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LiveData
@@ -8,12 +8,12 @@ import com.alorma.tempcontacts.domain.work.CheckRemovedContactsTask
 import com.alorma.tempcontacts.extensions.map
 import com.alorma.tempcontacts.ui.common.BaseViewModel
 
-class ContactsListViewModel(private val operations: ContactsList,
-                            contactRepository: ContactRepository,
-                            private val checkRemovedContactsTask: CheckRemovedContactsTask) :
+class DocumentsListViewModel(private val operations: DocumentsListMapper,
+                             contactRepository: ContactRepository,
+                             private val checkRemovedContactsTask: CheckRemovedContactsTask) :
         BaseViewModel() {
 
-    val contacts: LiveData<ContactsList.ContactsState> = contactRepository.load().map {
+    val documentsMapper: LiveData<DocumentsListMapper.ContactsState> = contactRepository.load().map {
         operations.mapContacts(it)
     }.map {
         operations.items(it)
