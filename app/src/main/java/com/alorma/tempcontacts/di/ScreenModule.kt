@@ -1,17 +1,17 @@
 package com.alorma.tempcontacts.di
 
-import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.Fragment
 import com.karumi.dexter.Dexter
 import com.karumi.dexter.DexterBuilder
 import dagger.Module
 import dagger.Provides
 
 @Module
-open class ScreenModule(private val activity: FragmentActivity) {
+open class ScreenModule(private val fragment: Fragment) {
 
     @Provides
-    fun provideActivity(): FragmentActivity = activity
+    fun provideFragment(): Fragment = fragment
 
     @Provides
-    fun providesPermission(): DexterBuilder.Permission = Dexter.withActivity(activity)
+    fun providesPermission(): DexterBuilder.Permission = Dexter.withActivity(fragment.activity)
 }

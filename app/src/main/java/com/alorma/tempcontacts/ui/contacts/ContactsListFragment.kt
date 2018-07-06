@@ -1,19 +1,7 @@
 package com.alorma.tempcontacts.ui.contacts
 
-import android.os.Bundle
-import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.alorma.tempcontacts.R
-import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import com.alorma.tempcontacts.domain.model.Contact
-import com.alorma.tempcontacts.dsl.DslAdapter
-import com.alorma.tempcontacts.dsl.adapterDsl
-import kotlinx.android.synthetic.main.contacts_list_activity.*
-import javax.inject.Inject
-
-class ContactsListActivity : AppCompatActivity() {
+/*
+class ContactsListFragment : Fragment() {
 
     @Inject
     lateinit var navigator: ContactsNavigator
@@ -23,9 +11,12 @@ class ContactsListActivity : AppCompatActivity() {
 
     private lateinit var adapter: DslAdapter<Contact>
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.contacts_list_activity)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.contacts_list_fragment, null, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         component add ContactsListModule(this) inject this
 
@@ -35,7 +26,7 @@ class ContactsListActivity : AppCompatActivity() {
             it?.let { onState(it) }
         })
 
-        adapter = adapterDsl(recycler) {
+        adapter = adapterDsl(view.recycler) {
             item {
                 layout = android.R.layout.simple_list_item_1
                 bindView { view, contact ->
@@ -43,9 +34,9 @@ class ContactsListActivity : AppCompatActivity() {
                 }
             }
         }
-        recycler.layoutManager = LinearLayoutManager(this)
+        view.recycler.layoutManager = LinearLayoutManager(context)
 
-        fab.setOnClickListener { navigator.openCreateContact() }
+        view.fab.setOnClickListener { navigator.openCreateContact() }
     }
 
     private fun onState(it: ContactsList.ContactsState) {
@@ -57,4 +48,5 @@ class ContactsListActivity : AppCompatActivity() {
     private fun onItems(it: ContactsList.ContactsState.Items) {
         adapter.submitList(it.items)
     }
-}
+
+}*/

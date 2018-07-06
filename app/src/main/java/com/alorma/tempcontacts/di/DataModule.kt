@@ -22,5 +22,5 @@ class DataModule(private val context: Context) {
     fun providesContactsDao(appDatabase: AppDatabase): ContactDao = appDatabase.contactDao()
 
     @Provides
-    fun provideWorkManager(): WorkManager = WorkManager.getInstance()
+    fun provideWorkManager(): WorkManager? = WorkManager.getInstance()
 }

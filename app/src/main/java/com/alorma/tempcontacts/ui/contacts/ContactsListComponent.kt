@@ -4,5 +4,5 @@ import dagger.Subcomponent
 
 @Subcomponent(modules = [ContactsListModule::class])
 interface ContactsListComponent {
-    infix fun inject(contactsListActivity: ContactsListActivity)
+    //infix fun inject(contactsListFragment: ContactsListFragment)
 }

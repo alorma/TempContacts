@@ -6,15 +6,17 @@ import androidx.work.WorkManager
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class RemoveContactTask @Inject constructor(private val manager: WorkManager) {
+class RemoveContactTask @Inject constructor(private val manager: WorkManager?) {
     fun removeUser(androidId: String, time: Long) {
-        val data = Data.Builder()
-                .putString(DeleteSingleContactWorker.ANDROID_ID, androidId)
-                .build()
-        val compressionWork = OneTimeWorkRequest.Builder(DeleteSingleContactWorker::class.java)
-                .setInputData(data)
-                .setInitialDelay(time, TimeUnit.MILLISECONDS)
-                .build()
-        manager.enqueue(compressionWork)
+        manager?.apply {
+            val data = Data.Builder()
+                    .putString(DeleteSingleContactWorker.ANDROID_ID, androidId)
+                    .build()
+            val compressionWork = OneTimeWorkRequest.Builder(DeleteSingleContactWorker::class.java)
+                    .setInputData(data)
+                    .setInitialDelay(time, TimeUnit.MILLISECONDS)
+                    .build()
+            enqueue(compressionWork)
+        }
     }
 }

@@ -1,21 +1,6 @@
 package com.alorma.tempcontacts.ui.newcontact
 
-import android.Manifest
-import android.content.Intent
-import android.net.Uri
-import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
-import com.alorma.tempcontacts.R
-import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import com.alorma.tempcontacts.domain.model.Contact
-import com.alorma.tempcontacts.dsl.dsl
-import com.karumi.dexter.DexterBuilder
-import kotlinx.android.synthetic.main.new_contact_activity.*
-import javax.inject.Inject
-
+/*
 class NewContactActivity : AppCompatActivity() {
 
     @Inject
@@ -104,4 +89,6 @@ class NewContactActivity : AppCompatActivity() {
             if (createContact) this.uri = it
         }
     }
+
 }
+*/
