@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.create
+package com.alorma.tempcontacts.ui.configuration
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.create
+package com.alorma.tempcontacts.ui.configuration
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders

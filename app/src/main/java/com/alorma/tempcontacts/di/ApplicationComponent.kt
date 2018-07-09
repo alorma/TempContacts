@@ -4,8 +4,8 @@ import com.alorma.tempcontacts.domain.work.DeleteSingleContactWorker
 import com.alorma.tempcontacts.domain.work.SyncContactsWorker
 import com.alorma.tempcontacts.ui.documents.DocumentsListComponent
 import com.alorma.tempcontacts.ui.documents.DocumentsListModule
-import com.alorma.tempcontacts.ui.create.CreateDocumentComponent
-import com.alorma.tempcontacts.ui.create.CreateDocumentModule
+import com.alorma.tempcontacts.ui.configuration.CreateDocumentComponent
+import com.alorma.tempcontacts.ui.configuration.CreateDocumentModule
 import dagger.Component
 import javax.inject.Singleton
 

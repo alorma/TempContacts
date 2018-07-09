@@ -58,7 +58,7 @@ class DocumentsFragment : Fragment() {
 
         view.fab.setOnClickListener {
             checkPermission {
-                findNavController(it).navigate(R.id.action_documentsFragment_to_createDocumentFragment)
+                findNavController(it).navigate(R.id.action_documentsFragment_to_selectDocumentFragment)
             }
         }
     }

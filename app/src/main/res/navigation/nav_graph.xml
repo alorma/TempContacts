@@ -11,13 +11,26 @@
         android:label="DocumentsFragment"
         tools:layout="@layout/fragment_documents">
         <action
-            android:id="@+id/action_documentsFragment_to_createDocumentFragment"
-            app:destination="@id/createDocumentFragment" />
+            android:id="@+id/action_documentsFragment_to_selectDocumentFragment"
+            app:destination="@id/selectDocumentFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/createDocumentFragment"
-        android:name="com.alorma.tempcontacts.ui.create.CreateDocumentFragment"
-        android:label="fragment_create_document"
-        tools:layout="@layout/fragment_create_document" />
+        android:id="@+id/selectDocumentFragment"
+        android:name="com.alorma.tempcontacts.ui.select.SelectDocumentFragment"
+        android:label="fragment_select_document"
+        tools:layout="@layout/fragment_select_document">
+        <action
+            android:id="@+id/action_createDocumentFragment_to_documentConfigurationFragment"
+            app:destination="@id/documentConfigurationFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/documentConfigurationFragment"
+        android:name="com.alorma.tempcontacts.ui.configuration.DocumentConfigurationFragment"
+        android:label="DocumentConfigurationFragment"
+        tools:layout="@layout/fragment_config_document">
+        <argument
+            android:name="uri"
+            app:type="string" />
+    </fragment>
 </navigation>

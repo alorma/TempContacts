@@ -1,4 +1,4 @@
-package com.alorma.tempcontacts.ui.create
+package com.alorma.tempcontacts.ui.select
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,24 +7,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation.createNavigateOnClickListener
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.alorma.tempcontacts.R
-import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import kotlinx.android.synthetic.main.fragment_create_document.view.*
-import javax.inject.Inject
+import com.alorma.tempcontacts.ui.configuration.DocumentConfigurationFragment
+import kotlinx.android.synthetic.main.fragment_select_document.view.*
 
-class CreateDocumentFragment : Fragment() {
+class SelectDocumentFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? =
-            inflater.inflate(R.layout.fragment_create_document, container, false)
-
-    @Inject
-    lateinit var viewModel: CreateDocumentViewModel
+            inflater.inflate(R.layout.fragment_select_document, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        component add CreateDocumentModule(this) inject this
 
         view.fabCreate.setOnClickListener {
             startActivityForResult(Intent(ContactsContract.Intents.Insert.ACTION).apply {
@@ -41,6 +37,11 @@ class CreateDocumentFragment : Fragment() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+
+        data?.data?.let {
+            val bundle = DocumentConfigurationFragment.generateArguments(it.toString())
+            findNavController(this).navigate(R.id.documentConfigurationFragment, bundle)
+        }
     }
 
     companion object {
