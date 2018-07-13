@@ -5,21 +5,22 @@ import android.content.Context
 import android.net.Uri
 import android.provider.ContactsContract
 import androidx.lifecycle.LiveData
-import com.alorma.tempcontacts.domain.model.Contact
+import com.alorma.tempcontacts.domain.model.AppDocument
+import com.alorma.tempcontacts.domain.model.Type
 import com.alorma.tempcontacts.extensions.queryExist
 import com.alorma.tempcontacts.extensions.queryFirstLive
 import javax.inject.Inject
 
-class ContactDataSource @Inject constructor(private val context: Context) {
+class DocumentsDataSource @Inject constructor(private val context: Context) {
 
-    fun loadContact(contactUri: Uri): LiveData<Contact?> = context.queryFirstLive(contactUri) {
-        val idIndex = getColumnIndex(ContactsContract.Contacts._ID)
-        val nameIndex = getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME)
+    fun loadDocument(documentUri: Uri): LiveData<AppDocument?> = context.queryFirstLive(documentUri) {
+        val idIndex = getColumnIndex("_id").takeIf { it != -1 } ?: getColumnIndex("document_id")
+        val nameIndex = getColumnIndex("display_name").takeIf { it != -1 } ?: getColumnIndex("_display_name")
 
         val id = getString(idIndex)
         val name = getString(nameIndex)
 
-        Contact(id, name, 0)
+        AppDocument(id, name, 0, Type.Unknown)
     }
 
     fun delete(androidId: String) {

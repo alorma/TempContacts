@@ -2,10 +2,10 @@ package com.alorma.tempcontacts.domain.work
 
 import androidx.work.Worker
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import com.alorma.tempcontacts.domain.repository.ContactRepository
+import com.alorma.tempcontacts.domain.repository.DocumentsRepository
 import javax.inject.Inject
 import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
-import com.alorma.tempcontacts.data.framework.ContactDataSource as System
+import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
 
 class DeleteSingleContactWorker : Worker() {
 
@@ -14,7 +14,7 @@ class DeleteSingleContactWorker : Worker() {
     }
 
     @Inject
-    lateinit var contactRepository: ContactRepository
+    lateinit var documentsRepository: DocumentsRepository
 
     override fun doWork(): Result {
         component inject this
@@ -29,6 +29,6 @@ class DeleteSingleContactWorker : Worker() {
     }
 
     private fun deleteContact(androidId: String) {
-        contactRepository.delete(androidId)
+        documentsRepository.delete(androidId)
     }
 }

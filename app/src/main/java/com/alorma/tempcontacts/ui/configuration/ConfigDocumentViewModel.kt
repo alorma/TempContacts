@@ -3,9 +3,9 @@ package com.alorma.tempcontacts.ui.configuration
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.alorma.tempcontacts.domain.model.Contact
+import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.CreateContact
-import com.alorma.tempcontacts.domain.repository.ContactRepository
+import com.alorma.tempcontacts.domain.repository.DocumentsRepository
 import com.alorma.tempcontacts.domain.work.RemoveContactTask
 import com.alorma.tempcontacts.extensions.actionSwitchMap
 import com.alorma.tempcontacts.extensions.switchMap
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class ConfigDocumentViewModel @Inject constructor(
         private val options: ConfigDocumentMapper,
-        private val contactRepository: ContactRepository,
+        private val documentsRepository: DocumentsRepository,
         private val scheduleRemoveTask: RemoveContactTask) :
         BaseViewModel() {
 
@@ -27,29 +27,29 @@ class ConfigDocumentViewModel @Inject constructor(
             Save.InvalidTime -> options.invalidTime()
             is Save.SaveContact -> {
                 val timeCalculation = getTime(it.time)
-                val createContact = CreateContact(it.contact.androidId, it.contact.name, timeCalculation)
-                contactRepository.create(createContact)
-                schedule(it.contact.androidId, timeCalculation)
+                val createContact = CreateContact(it.appDocument.androidId, it.appDocument.name, timeCalculation)
+                documentsRepository.create(createContact)
+                schedule(it.appDocument.androidId, timeCalculation)
                 options.saveComplete()
             }
         }
     }
 
     private val uriLiveData: MutableLiveData<Uri> = MutableLiveData()
-    private val getContactLiveData: LiveData<Contact?> = uriLiveData.switchMap {
-        contactRepository.import(it)
+    private val getAppDocumentLiveData: LiveData<AppDocument?> = uriLiveData.switchMap {
+        documentsRepository.import(it)
     }
 
-    fun onContact(uri: Uri): LiveData<Contact?> {
+    fun onDocumentUriLoaded(uri: Uri): LiveData<AppDocument?> {
         uriLiveData.postValue(uri)
-        return getContactLiveData
+        return getAppDocumentLiveData
     }
 
-    fun save(contact: Contact, time: TimeSelection): LiveData<ConfigDocumentMapper.NewState> {
+    fun save(appDocument: AppDocument, time: TimeSelection): LiveData<ConfigDocumentMapper.NewState> {
         val saveState = if (time == TimeSelection.NONE) {
             Save.InvalidTime
         } else {
-            Save.SaveContact(contact, time)
+            Save.SaveContact(appDocument, time)
         }
         saveLiveData.postValue(saveState)
 
@@ -70,6 +70,6 @@ class ConfigDocumentViewModel @Inject constructor(
 
     sealed class Save {
         object InvalidTime : Save()
-        data class SaveContact(val contact: Contact, val time: TimeSelection) : Save()
+        data class SaveContact(val appDocument: AppDocument, val time: TimeSelection) : Save()
     }
 }

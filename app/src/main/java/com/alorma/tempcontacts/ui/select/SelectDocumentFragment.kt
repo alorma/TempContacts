@@ -85,7 +85,7 @@ class SelectDocumentFragment : Fragment() {
     private fun getContactPermission(function: () -> Unit) {
         permission.dsl(arrayOf(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)) {
             onDenied {
-                Toast.makeText(context, "Contact permission denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "AppDocument permission denied", Toast.LENGTH_SHORT).show()
             }
 
             rationale { _, accept, _ ->

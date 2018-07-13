@@ -11,7 +11,7 @@ import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import com.alorma.tempcontacts.domain.model.Contact
+import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.dsl.DslAdapter
 import com.alorma.tempcontacts.dsl.adapterDsl
 import kotlinx.android.synthetic.main.fragment_documents.view.*
@@ -26,7 +26,7 @@ class DocumentsFragment : Fragment() {
     @Inject
     lateinit var viewModel: DocumentsListViewModel
 
-    private lateinit var adapter: DslAdapter<Contact>
+    private lateinit var adapter: DslAdapter<AppDocument>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
