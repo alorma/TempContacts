@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
 import com.alorma.tempcontacts.domain.model.AppDocument
@@ -54,7 +55,15 @@ class DocumentConfigurationFragment : Fragment() {
 
         saveButton.setOnClickListener {
             viewModel.save(appDocument, TimeSelection.HOUR).observe(this) {
-
+                when (it) {
+                    ConfigDocumentMapper.NewState.InvalidTime -> {
+                    }
+                    ConfigDocumentMapper.NewState.Complete -> {
+                        findNavController(this)
+                                .popBackStack(R.id.documentsFragment,
+                                        false)
+                    }
+                }
             }
         }
     }

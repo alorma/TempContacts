@@ -14,10 +14,12 @@ class SyncContactsWorker : Worker() {
         component inject this
 
         documentsRepository.loadDocuments().forEach {
+            /*
             val exist = documentsRepository.exist(it)
             if (!exist) {
                 documentsRepository.delete(it.androidId)
             }
+            */
         }
 
         return Result.SUCCESS
