@@ -62,7 +62,7 @@ class ConfigDocumentViewModel @Inject constructor(
         TimeSelection.DAY -> TimeUnit.DAYS.toMillis(1)
         TimeSelection.WEEK -> TimeUnit.DAYS.toMillis(7)
         TimeSelection.MONTH -> TimeUnit.DAYS.toMillis(30)
-        is TimeSelection.Custom -> time.number * getTime(time.type)
+        is TimeSelection.Custom -> time.unit.toMillis(time.number)
         else -> 0
     }
 

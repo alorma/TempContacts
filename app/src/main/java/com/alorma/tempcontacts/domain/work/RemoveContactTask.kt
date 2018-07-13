@@ -10,9 +10,9 @@ class RemoveContactTask @Inject constructor(private val manager: WorkManager?) {
     fun removeUser(androidId: String, time: Long) {
         manager?.apply {
             val data = Data.Builder()
-                    .putString(DeleteSingleContactWorker.ANDROID_ID, androidId)
+                    .putString(DeleteSingleDocumentWorker.ANDROID_ID, androidId)
                     .build()
-            val compressionWork = OneTimeWorkRequest.Builder(DeleteSingleContactWorker::class.java)
+            val compressionWork = OneTimeWorkRequest.Builder(DeleteSingleDocumentWorker::class.java)
                     .setInputData(data)
                     .setInitialDelay(time, TimeUnit.MILLISECONDS)
                     .build()

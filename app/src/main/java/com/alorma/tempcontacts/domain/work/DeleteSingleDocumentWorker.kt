@@ -7,7 +7,7 @@ import javax.inject.Inject
 import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
 import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
 
-class DeleteSingleContactWorker : Worker() {
+class DeleteSingleDocumentWorker : Worker() {
 
     companion object {
         const val ANDROID_ID = "android_id"

@@ -28,6 +28,7 @@ class DocumentsDataSource @Inject constructor(private val context: Context) {
     }
 
     fun delete(androidId: String) {
+        TODO()
         val uri = ContentUris.appendId(ContactsContract.Contacts.CONTENT_URI.buildUpon(),
                 androidId.toLong()).build()
 

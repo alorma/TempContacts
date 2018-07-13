@@ -14,6 +14,7 @@ import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
 import com.alorma.tempcontacts.extensions.observe
 import kotlinx.android.synthetic.main.fragment_config_document.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class DocumentConfigurationFragment : Fragment() {
@@ -32,7 +33,6 @@ class DocumentConfigurationFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_config_document, null, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -54,7 +54,7 @@ class DocumentConfigurationFragment : Fragment() {
         }
 
         saveButton.setOnClickListener {
-            viewModel.save(appDocument, TimeSelection.HOUR).observe(this) {
+            viewModel.save(appDocument, TimeSelection.Custom(10, TimeUnit.SECONDS)).observe(this) {
                 when (it) {
                     ConfigDocumentMapper.NewState.InvalidTime -> {
                     }

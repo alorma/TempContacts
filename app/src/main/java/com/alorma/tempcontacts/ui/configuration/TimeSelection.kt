@@ -1,5 +1,7 @@
 package com.alorma.tempcontacts.ui.configuration
 
+import java.util.concurrent.TimeUnit
+
 sealed class TimeSelection {
     object HOUR : TimeSelection()
     object DAY : TimeSelection()
@@ -7,5 +9,5 @@ sealed class TimeSelection {
     object MONTH : TimeSelection()
     object OTHER : TimeSelection()
     object NONE : TimeSelection()
-    data class Custom(val number: Int, val type: TimeSelection): TimeSelection()
+    data class Custom(val number: Long, val unit: TimeUnit): TimeSelection()
 }
