@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
 import com.alorma.tempcontacts.dsl.dsl
-import com.alorma.tempcontacts.ui.configuration.CreateDocumentModule
 import com.alorma.tempcontacts.ui.configuration.DocumentConfigurationFragment
 import com.karumi.dexter.DexterBuilder
 import kotlinx.android.synthetic.main.fragment_select_document.view.*
@@ -31,7 +30,7 @@ class SelectDocumentFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        component add CreateDocumentModule(this) inject this
+        component add SelectDocumentModule(this) inject this
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -86,7 +85,7 @@ class SelectDocumentFragment : Fragment() {
     private fun getContactPermission(function: () -> Unit) {
         permission.dsl(arrayOf(Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS)) {
             onDenied {
-                Toast.makeText(context, it.joinToString { it }, Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "Contact permission denied", Toast.LENGTH_SHORT).show()
             }
 
             rationale { _, accept, _ ->

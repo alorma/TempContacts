@@ -8,10 +8,10 @@ import dagger.Module
 import dagger.Provides
 
 @Module
-class CreateDocumentModule(private val fragment: Fragment) : ScreenModule(fragment) {
+class ConfigDocumentModule(private val fragment: Fragment) : ScreenModule(fragment) {
 
     @Provides
-    fun provideViewModel(factory: CreateDocumentViewModelFactory): CreateDocumentViewModel =
+    fun provideViewModel(factory: ConfigDocumentViewModelFactory): ConfigDocumentViewModel =
             ViewModelProviders.of(fragment, factory).get()
 
 }

@@ -6,12 +6,12 @@ import com.alorma.tempcontacts.domain.repository.ContactRepository
 import com.alorma.tempcontacts.domain.work.RemoveContactTask
 import javax.inject.Inject
 
-class CreateDocumentViewModelFactory @Inject constructor(
-        private val options: CreateDocumentMapper,
+class ConfigDocumentViewModelFactory @Inject constructor(
+        private val options: ConfigDocumentMapper,
         private val contactRepository: ContactRepository,
         private val scheduleRemoveTask: RemoveContactTask
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>): T =
-            CreateDocumentViewModel(options, contactRepository, scheduleRemoveTask) as T
+            ConfigDocumentViewModel(options, contactRepository, scheduleRemoveTask) as T
 }

@@ -14,15 +14,15 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
-class CreateDocumentViewModel @Inject constructor(
-        private val options: CreateDocumentMapper,
+class ConfigDocumentViewModel @Inject constructor(
+        private val options: ConfigDocumentMapper,
         private val contactRepository: ContactRepository,
         private val scheduleRemoveTask: RemoveContactTask) :
         BaseViewModel() {
 
     private val saveLiveData: MutableLiveData<Save> = MutableLiveData()
 
-    private val saveContact: LiveData<CreateDocumentMapper.NewState> = saveLiveData.actionSwitchMap {
+    private val saveContact: LiveData<ConfigDocumentMapper.NewState> = saveLiveData.actionSwitchMap {
         when (it) {
             Save.InvalidTime -> options.invalidTime()
             is Save.SaveContact -> {
@@ -45,7 +45,7 @@ class CreateDocumentViewModel @Inject constructor(
         return getContactLiveData
     }
 
-    fun save(contact: Contact, time: TimeSelection): LiveData<CreateDocumentMapper.NewState> {
+    fun save(contact: Contact, time: TimeSelection): LiveData<ConfigDocumentMapper.NewState> {
         val saveState = if (time == TimeSelection.NONE) {
             Save.InvalidTime
         } else {

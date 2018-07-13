@@ -13,6 +13,12 @@ import kotlinx.android.synthetic.main.fragment_config_document.*
 
 class DocumentConfigurationFragment : Fragment() {
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_config_document, null, false)
     }
