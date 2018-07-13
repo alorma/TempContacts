@@ -1,12 +1,10 @@
 package com.alorma.tempcontacts.ui.documents
 
-import android.Manifest
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation.findNavController
@@ -16,8 +14,6 @@ import com.alorma.tempcontacts.TempContactsApp.Companion.component
 import com.alorma.tempcontacts.domain.model.Contact
 import com.alorma.tempcontacts.dsl.DslAdapter
 import com.alorma.tempcontacts.dsl.adapterDsl
-import com.alorma.tempcontacts.dsl.dsl
-import com.karumi.dexter.DexterBuilder
 import kotlinx.android.synthetic.main.fragment_documents.view.*
 import javax.inject.Inject
 
@@ -30,15 +26,16 @@ class DocumentsFragment : Fragment() {
     @Inject
     lateinit var viewModel: DocumentsListViewModel
 
-    @Inject
-    lateinit var permission: DexterBuilder.Permission
-
     private lateinit var adapter: DslAdapter<Contact>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        component add DocumentsListModule(this) inject this
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        component add DocumentsListModule(this) inject this
 
         viewModel.subscribe(this)
 
@@ -57,9 +54,7 @@ class DocumentsFragment : Fragment() {
         view.recycler.layoutManager = LinearLayoutManager(context)
 
         view.fab.setOnClickListener {
-            checkPermission {
-                findNavController(it).navigate(R.id.action_documentsFragment_to_selectDocumentFragment)
-            }
+            findNavController(it).navigate(R.id.action_documentsFragment_to_selectDocumentFragment)
         }
     }
 
@@ -73,25 +68,4 @@ class DocumentsFragment : Fragment() {
         adapter.submitList(it.items)
     }
 
-
-    private fun checkPermission(function: () -> Unit) {
-        val permissions = arrayOf(
-                Manifest.permission.WRITE_CONTACTS,
-                Manifest.permission.READ_CONTACTS
-        )
-
-        permission.dsl(permissions) {
-            onDenied {
-                Toast.makeText(context, it.joinToString { it }, Toast.LENGTH_SHORT).show()
-            }
-
-            rationale { _, accept, _ ->
-                accept()
-            }
-
-            onGranted {
-                function()
-            }
-        }.check()
-    }
 }
