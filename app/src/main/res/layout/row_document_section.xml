@@ -9,8 +9,10 @@
         android:id="@+id/titleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
         android:padding="8dp"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Headline"
+        android:textColor="@color/white"
         tools:text="Section title" />
 
 </LinearLayout>
