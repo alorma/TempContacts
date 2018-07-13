@@ -1,0 +1,11 @@
+Contact:
+
+content://com.android.contacts/contacts/lookup/0r20-3741433537413537/20
+
+Image:
+
+content://com.google.android.apps.photos.contentprovider/-1/1/content%3A%2F%2Fmedia%2Fexternal%2Fimages%2Fmedia%2F62/ORIGINAL/NONE/1177138281
+
+Document:
+
+content://com.android.providers.downloads.documents/document/raw%3A%2Fstorage%2Femulated%2F0%2FDownload%2Fboh.rtf

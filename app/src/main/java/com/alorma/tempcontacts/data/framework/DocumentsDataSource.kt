@@ -15,24 +15,23 @@ import javax.inject.Inject
 class DocumentsDataSource @Inject constructor(private val context: Context) {
 
     fun loadDocument(documentUri: Uri): LiveData<AppDocument?> = context.queryFirstLive(documentUri) {
-        val idIndex = getColumnIndex("_id").takeIf { it != -1 } ?: getColumnIndex("document_id")
         val nameIndex = getColumnIndex("display_name").takeIf { it != -1 }
                 ?: getColumnIndex("_display_name")
 
-        val id = getString(idIndex)
         val name = getString(nameIndex)
 
         val type = context.contentResolver.getType(documentUri)
 
-        AppDocument(id, name, 0, Type.map(type))
+        AppDocument(documentUri.toString(), name, 0, Type.map(type))
     }
 
     fun delete(androidId: String) {
-        TODO()
+        /*
         val uri = ContentUris.appendId(ContactsContract.Contacts.CONTENT_URI.buildUpon(),
                 androidId.toLong()).build()
 
         delete(uri)
+        */
     }
 
     private fun delete(uri: Uri) {
