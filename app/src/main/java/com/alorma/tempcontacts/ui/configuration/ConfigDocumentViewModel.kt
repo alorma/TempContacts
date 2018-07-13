@@ -4,7 +4,7 @@ import android.net.Uri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.alorma.tempcontacts.domain.model.AppDocument
-import com.alorma.tempcontacts.domain.model.CreateContact
+import com.alorma.tempcontacts.domain.model.NewDocument
 import com.alorma.tempcontacts.domain.repository.DocumentsRepository
 import com.alorma.tempcontacts.domain.work.RemoveContactTask
 import com.alorma.tempcontacts.extensions.actionSwitchMap
@@ -27,8 +27,9 @@ class ConfigDocumentViewModel @Inject constructor(
             Save.InvalidTime -> options.invalidTime()
             is Save.SaveContact -> {
                 val timeCalculation = getTime(it.time)
-                val createContact = CreateContact(it.appDocument.androidId, it.appDocument.name, timeCalculation)
-                documentsRepository.create(createContact)
+                val newDocument = NewDocument(it.appDocument.androidId, it.appDocument.name,
+                        it.appDocument.type, timeCalculation)
+                documentsRepository.create(newDocument)
                 schedule(it.appDocument.androidId, timeCalculation)
                 options.saveComplete()
             }

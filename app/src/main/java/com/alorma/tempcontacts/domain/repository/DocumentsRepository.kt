@@ -3,7 +3,7 @@ package com.alorma.tempcontacts.domain.repository
 import android.net.Uri
 import androidx.lifecycle.LiveData
 import com.alorma.tempcontacts.domain.model.AppDocument
-import com.alorma.tempcontacts.domain.model.CreateContact
+import com.alorma.tempcontacts.domain.model.NewDocument
 import javax.inject.Inject
 import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
 import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
@@ -25,5 +25,5 @@ class DocumentsRepository @Inject constructor(
 
     fun exist(appDocument: AppDocument) : Boolean = system.exist(appDocument.androidId)
 
-    fun create(createContact: CreateContact) = cache.save(createContact)
+    fun create(newDocument: NewDocument) = cache.save(newDocument)
 }

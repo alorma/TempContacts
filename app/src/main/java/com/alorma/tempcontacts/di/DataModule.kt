@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import androidx.work.WorkManager
 import com.alorma.tempcontacts.data.cache.AppDatabase
-import com.alorma.tempcontacts.data.cache.ContactDao
+import com.alorma.tempcontacts.data.cache.DocumentsDao
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -19,7 +19,7 @@ class DataModule(private val context: Context) {
 
     @Singleton
     @Provides
-    fun providesContactsDao(appDatabase: AppDatabase): ContactDao = appDatabase.contactDao()
+    fun providesContactsDao(appDatabase: AppDatabase): DocumentsDao = appDatabase.contactDao()
 
     @Provides
     fun provideWorkManager(): WorkManager? = WorkManager.getInstance()

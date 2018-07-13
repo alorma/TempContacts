@@ -3,33 +3,33 @@ package com.alorma.tempcontacts.data.cache
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.alorma.tempcontacts.domain.model.AppDocument
-import com.alorma.tempcontacts.domain.model.CreateContact
+import com.alorma.tempcontacts.domain.model.NewDocument
 import javax.inject.Inject
 
 class ContactDataSource @Inject constructor(
-        private val contactDao: ContactDao,
-        private val mapper: ContactMapper) {
+        private val documentsDao: DocumentsDao,
+        private val mapper: DocumentMapper) {
 
-    fun load(): LiveData<List<AppDocument>> = Transformations.map(contactDao.get()) {
+    fun load(): LiveData<List<AppDocument>> = Transformations.map(documentsDao.get()) {
         it.map { mapper.map(it) }
     }
 
-    fun loadContacts(): List<AppDocument> = contactDao.getList().map { mapper.map(it) }
+    fun loadContacts(): List<AppDocument> = documentsDao.getList().map { mapper.map(it) }
 
-    fun get(androidId: String): LiveData<AppDocument> = Transformations.map(contactDao.findById(androidId)) {
+    fun get(androidId: String): LiveData<AppDocument> = Transformations.map(documentsDao.findById(androidId)) {
         mapper.map(it)
     }
 
-    fun save(it: CreateContact) {
-        val byAndroidId = contactDao.getById(it.androidId)
+    fun save(it: NewDocument) {
+        val byAndroidId = documentsDao.getById(it.androidId)
         if (byAndroidId == null) {
-            contactDao.insertAll(mapper.map(it))
+            documentsDao.insertAll(mapper.map(it))
         } else {
-            contactDao.update(mapper.map(it))
+            documentsDao.update(mapper.map(it))
         }
     }
 
     fun delete(androidId: String) {
-        contactDao.delete(androidId)
+        documentsDao.delete(androidId)
     }
 }
