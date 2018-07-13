@@ -11,16 +11,20 @@ import com.alorma.tempcontacts.extensions.queryExist
 import com.alorma.tempcontacts.extensions.queryFirstLive
 import javax.inject.Inject
 
+
 class DocumentsDataSource @Inject constructor(private val context: Context) {
 
     fun loadDocument(documentUri: Uri): LiveData<AppDocument?> = context.queryFirstLive(documentUri) {
         val idIndex = getColumnIndex("_id").takeIf { it != -1 } ?: getColumnIndex("document_id")
-        val nameIndex = getColumnIndex("display_name").takeIf { it != -1 } ?: getColumnIndex("_display_name")
+        val nameIndex = getColumnIndex("display_name").takeIf { it != -1 }
+                ?: getColumnIndex("_display_name")
 
         val id = getString(idIndex)
         val name = getString(nameIndex)
 
-        AppDocument(id, name, 0, Type.Unknown)
+        val type = context.contentResolver.getType(documentUri)
+
+        AppDocument(id, name, 0, Type.map(type))
     }
 
     fun delete(androidId: String) {

@@ -9,6 +9,7 @@ import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
+import com.alorma.tempcontacts.domain.model.Type
 import com.alorma.tempcontacts.extensions.observe
 import kotlinx.android.synthetic.main.fragment_config_document.*
 import javax.inject.Inject
@@ -37,6 +38,11 @@ class DocumentConfigurationFragment : Fragment() {
             viewModel.onDocumentUriLoaded(Uri.parse(it)).observe(this) {
                 it?.let {
                     contactName.text = it.name
+                    imageType.setImageResource(when (it.type) {
+                        Type.Contact -> R.drawable.ic_person_add
+                        Type.Image -> R.drawable.ic_camera
+                        else -> R.drawable.ic_attach_file
+                    })
                 }
             }
         }
