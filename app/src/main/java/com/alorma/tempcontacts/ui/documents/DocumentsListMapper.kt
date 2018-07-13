@@ -1,23 +1,43 @@
 package com.alorma.tempcontacts.ui.documents
 
 import com.alorma.tempcontacts.domain.model.AppDocument
+import com.alorma.tempcontacts.domain.model.Type
 import com.alorma.tempcontacts.ui.common.State
 import javax.inject.Inject
 
 class DocumentsListMapper @Inject constructor() {
-    sealed class ContactsState : State() {
-        object Loading : ContactsState()
-        object Empty : ContactsState()
-        data class Items(val items: List<AppDocument>) : ContactsState()
+    sealed class DocumentsState : State() {
+        object Loading : DocumentsState()
+        object Empty : DocumentsState()
+        data class Items(val items: List<AppDocumentVM>) : DocumentsState()
     }
 
-    fun loading(): ContactsState = ContactsState.Loading
+    fun loading(): DocumentsState = DocumentsState.Loading
 
-    fun mapContacts(it: List<AppDocument>): List<AppDocument> = it
+    fun mapDocuments(it: List<AppDocument>): List<AppDocumentVM> =
+            it.groupBy { it.type }
+                    .toList()
+                    .flatMap {
+                        val list = mutableListOf<AppDocumentVM>()
+                        list.add(mapType(it.first))
 
-    fun items(it: List<AppDocument>): ContactsState = if (it.isEmpty()) {
-        ContactsState.Empty
+                        list.addAll(it.second.map { mapDocument(it) })
+
+                        list
+                    }
+
+    private fun mapType(it: Type): AppDocumentVM = AppDocumentVM.SectionType(when (it) {
+        Type.Contact -> "Contacts"
+        Type.Image -> "Images"
+        Type.Document -> "Documents"
+        Type.Unknown -> "Unknown"
+    })
+
+    private fun mapDocument(it: AppDocument): AppDocumentVM = AppDocumentVM.Document(it.name, it.time)
+
+    fun items(it: List<AppDocumentVM>): DocumentsState = if (it.isEmpty()) {
+        DocumentsState.Empty
     } else {
-        ContactsState.Items(it)
+        DocumentsState.Items(it)
     }
 }

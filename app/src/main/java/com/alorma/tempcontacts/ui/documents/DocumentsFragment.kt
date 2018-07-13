@@ -4,16 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.navigation.Navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
-import com.alorma.tempcontacts.domain.model.AppDocument
-import com.alorma.tempcontacts.dsl.DslAdapter
-import com.alorma.tempcontacts.dsl.adapterDsl
 import kotlinx.android.synthetic.main.fragment_documents.view.*
 import javax.inject.Inject
 
@@ -26,7 +22,7 @@ class DocumentsFragment : Fragment() {
     @Inject
     lateinit var viewModel: DocumentsListViewModel
 
-    private lateinit var adapter: DslAdapter<AppDocument>
+    private lateinit var adapter: DocumentsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,32 +35,26 @@ class DocumentsFragment : Fragment() {
 
         viewModel.subscribe(this)
 
-        viewModel.documentsMapper.observe(this, Observer {
+        viewModel.documents.observe(this, Observer {
             it?.let { onState(it) }
         })
 
-        adapter = adapterDsl(view.recycler) {
-            item {
-                layout = android.R.layout.simple_list_item_1
-                bindView { view, contact ->
-                    view.findViewById<TextView>(android.R.id.text1)?.text = contact.name
-                }
-            }
-        }
+        adapter = DocumentsAdapter()
+        view.recycler.adapter = adapter
         view.recycler.layoutManager = LinearLayoutManager(context)
 
         view.fab.setOnClickListener {
-            findNavController(it).navigate(R.id.action_documentsFragment_to_selectDocumentFragment)
+            findNavController(it).navigate(R.id.selectDocumentFragment)
         }
     }
 
-    private fun onState(it: DocumentsListMapper.ContactsState) {
+    private fun onState(it: DocumentsListMapper.DocumentsState) {
         when (it) {
-            is DocumentsListMapper.ContactsState.Items -> onItems(it)
+            is DocumentsListMapper.DocumentsState.Items -> onItems(it)
         }
     }
 
-    private fun onItems(it: DocumentsListMapper.ContactsState.Items) {
+    private fun onItems(it: DocumentsListMapper.DocumentsState.Items) {
         adapter.submitList(it.items)
     }
 

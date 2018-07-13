@@ -13,8 +13,8 @@ class DocumentsListViewModel(private val operations: DocumentsListMapper,
                              private val checkRemovedContactsTask: CheckRemovedContactsTask) :
         BaseViewModel() {
 
-    val documentsMapper: LiveData<DocumentsListMapper.ContactsState> = documentsRepository.load().map {
-        operations.mapContacts(it)
+    val documents: LiveData<DocumentsListMapper.DocumentsState> = documentsRepository.load().map {
+        operations.mapDocuments(it)
     }.map {
         operations.items(it)
     }
