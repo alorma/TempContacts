@@ -4,7 +4,7 @@ import androidx.work.Worker
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
 import com.alorma.tempcontacts.domain.repository.DocumentsRepository
 import javax.inject.Inject
-import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
+import com.alorma.tempcontacts.data.cache.DocumentsDataSource as Cache
 import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
 
 class DeleteSingleDocumentWorker : Worker() {

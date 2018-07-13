@@ -6,7 +6,7 @@ import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.NewDocument
 import javax.inject.Inject
 
-class ContactDataSource @Inject constructor(
+class DocumentsDataSource @Inject constructor(
         private val documentsDao: DocumentsDao,
         private val mapper: DocumentMapper) {
 
@@ -30,6 +30,6 @@ class ContactDataSource @Inject constructor(
     }
 
     fun delete(androidId: String) {
-        documentsDao.delete(androidId)
+        //documentsDao.delete(androidId)
     }
 }

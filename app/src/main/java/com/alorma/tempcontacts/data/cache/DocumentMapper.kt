@@ -18,6 +18,6 @@ class DocumentMapper @Inject constructor() {
         else -> Type.Unknown
     }
 
-    fun map(contact: NewDocument): DocumentEntity =
-            DocumentEntity(contact.androidId, contact.name, contact.type::class.java.simpleName, contact.time)
+    fun map(newDocument: NewDocument): DocumentEntity =
+            DocumentEntity(newDocument.androidId, newDocument.name, newDocument.type::class.java.simpleName, newDocument.time)
 }

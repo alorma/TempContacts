@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.NewDocument
 import javax.inject.Inject
-import com.alorma.tempcontacts.data.cache.ContactDataSource as Cache
+import com.alorma.tempcontacts.data.cache.DocumentsDataSource as Cache
 import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
 
 class DocumentsRepository @Inject constructor(
