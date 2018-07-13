@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import com.alorma.tempcontacts.R
+import com.alorma.tempcontacts.R.id.contactName
 import kotlinx.android.synthetic.main.fragment_config_document.*
 
 class DocumentConfigurationFragment : Fragment() {
@@ -17,7 +19,10 @@ class DocumentConfigurationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        uriText.text = arguments?.getString(EXTRA_URI)
+        arguments?.getString(EXTRA_URI)?.let {
+            contactName.text = it
+            Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {
