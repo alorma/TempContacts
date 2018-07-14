@@ -25,7 +25,7 @@ class ContactCursor(private val context: Context): BaseCursor {
         return AppDocument(documentId, name, contactUri, 0, Type.Contact)
     }
 
-    override fun exist(documentUri: Uri): Boolean = context.queryExist(documentUri)
+    override fun exist(documentUri: Uri, type: Type): Boolean = context.queryExist(documentUri)
 
     companion object {
         const val NAME = "CONTACT"

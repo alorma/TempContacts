@@ -6,10 +6,9 @@ import android.net.Uri
 import androidx.core.net.toUri
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
-import com.alorma.tempcontacts.extensions.queryExist
 import java.io.File
 
-class ImageCursor(private val context: Context): BaseCursor {
+class ImageCursor(private val context: Context) : BaseCursor {
 
     override fun load(cursor: Cursor, documentId: String): AppDocument {
         val nameIndex = cursor.getColumnIndex("_display_name")
@@ -22,7 +21,8 @@ class ImageCursor(private val context: Context): BaseCursor {
         return AppDocument(documentId, name, dataFile, 0, Type.Image)
     }
 
-    override fun exist(documentUri: Uri): Boolean = context.queryExist(documentUri)
+    override fun exist(documentUri: Uri, type: Type): Boolean =
+            File(documentUri.toString()).exists()
 
     companion object {
         const val NAME = "IMAGE"

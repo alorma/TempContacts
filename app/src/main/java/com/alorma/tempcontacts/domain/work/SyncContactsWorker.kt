@@ -14,12 +14,7 @@ class SyncContactsWorker : Worker() {
         component inject this
 
         documentsRepository.loadDocuments().forEach {
-            /*
-            val exist = documentsRepository.exist(it)
-            if (!exist) {
-                documentsRepository.delete(it.androidId)
-            }
-            */
+            documentsRepository.syncLocal(it.androidId, it.uri, it.type)
         }
 
         return Result.SUCCESS

@@ -1,9 +1,11 @@
 package com.alorma.tempcontacts.domain.repository
 
 import android.net.Uri
+import android.util.Log
 import androidx.lifecycle.LiveData
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.NewDocument
+import com.alorma.tempcontacts.domain.model.Type
 import javax.inject.Inject
 import com.alorma.tempcontacts.data.cache.DocumentsDataSource as Cache
 import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
@@ -23,7 +25,17 @@ class DocumentsRepository @Inject constructor(
         cache.delete(androidId)
     }
 
-    fun exist(appDocument: AppDocument) : Boolean = system.exist(appDocument.androidId)
+    fun syncLocal(androidId: String, uri: Uri, type: Type) {
+        try {
+            if (!exist(uri, type)) {
+                cache.delete(androidId)
+            }
+        } catch (e: Exception) {
+            Log.e("AlormaSync", e.message, e)
+        }
+    }
+
+    private fun exist(uri: Uri, type: Type): Boolean = system.exist(uri, type)
 
     fun create(newDocument: NewDocument) = cache.save(newDocument)
 }

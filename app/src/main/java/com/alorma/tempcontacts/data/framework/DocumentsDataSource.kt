@@ -5,8 +5,10 @@ import android.net.Uri
 import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import com.alorma.tempcontacts.domain.model.AppDocument
+import com.alorma.tempcontacts.domain.model.Type
 import com.alorma.tempcontacts.extensions.queryFirstLive
 import javax.inject.Inject
+
 
 class DocumentsDataSource @Inject constructor(private val context: Context,
                                               private val cursorHandler: CursorHandler) {
@@ -20,5 +22,5 @@ class DocumentsDataSource @Inject constructor(private val context: Context,
 
     fun delete(uri: String) = cursorHandler.delete(uri.toUri())
 
-    fun exist(documentUri: String): Boolean = cursorHandler.exist(documentUri.toUri())
+    fun exist(documentUri: Uri, type: Type): Boolean = cursorHandler.exist(documentUri, type)
 }

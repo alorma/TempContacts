@@ -30,6 +30,6 @@ class DocumentsDataSource @Inject constructor(
     }
 
     fun delete(androidId: String) {
-        //documentsDao.delete(androidId)
+        documentsDao.delete(androidId)
     }
 }

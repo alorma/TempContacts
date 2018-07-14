@@ -5,7 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import androidx.core.net.toUri
 import com.alorma.tempcontacts.domain.model.AppDocument
-import com.alorma.tempcontacts.extensions.queryExist
+import com.alorma.tempcontacts.domain.model.Type
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -34,5 +34,11 @@ class CursorHandler @Inject constructor(private val context: Context,
         }
     }
 
-    override fun exist(documentUri: Uri): Boolean = context.queryExist(documentUri)
+    override fun exist(documentUri: Uri, type: Type): Boolean {
+        return when(type) {
+            Type.Contact -> contactCursor.exist(documentUri, type)
+            Type.Image -> imageCursor.exist(documentUri, type)
+            else -> documentCursor.exist(documentUri, type)
+        }
+    }
 }
