@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class DocumentEntity(
         @PrimaryKey val id: String,
         @ColumnInfo(name = "name") val name: String,
+        @ColumnInfo(name = "uri") val uri: String,
         @ColumnInfo(name = "type") val type: String,
         @ColumnInfo(name = "deleteTime") val time: Long) {
 

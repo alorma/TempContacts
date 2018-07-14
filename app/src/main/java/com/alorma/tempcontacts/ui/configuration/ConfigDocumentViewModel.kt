@@ -27,8 +27,13 @@ class ConfigDocumentViewModel @Inject constructor(
             Save.InvalidTime -> options.invalidTime()
             is Save.SaveContact -> {
                 val timeCalculation = getTime(it.time)
-                val newDocument = NewDocument(it.appDocument.androidId, it.appDocument.name,
-                        it.appDocument.type, timeCalculation)
+                val newDocument = NewDocument(
+                        it.appDocument.androidId,
+                        it.appDocument.name,
+                        it.appDocument.uri,
+                        it.appDocument.type,
+                        timeCalculation
+                )
                 documentsRepository.create(newDocument)
                 schedule(it.appDocument.androidId, timeCalculation)
                 options.saveComplete()
