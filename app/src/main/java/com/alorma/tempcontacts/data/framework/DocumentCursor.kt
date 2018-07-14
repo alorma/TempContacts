@@ -1,26 +1,30 @@
 package com.alorma.tempcontacts.data.framework
 
+import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import androidx.core.net.toUri
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
+import com.alorma.tempcontacts.extensions.queryExist
 import java.io.File
-import javax.inject.Inject
 
-class DocumentCursor @Inject constructor() {
+class DocumentCursor(private val context: Context): BaseCursor {
 
-    fun loadDocument(cursor: Cursor, documentUri: Uri): AppDocument =
-            cursor.mapCursorToDocument(documentUri)
+    override fun load(cursor: Cursor, documentId: String): AppDocument {
+        val idIndex = cursor.getColumnIndex("document_id")
+        val nameIndex = cursor.getColumnIndex("_display_name")
 
-    private fun Cursor.mapCursorToDocument(documentUri: Uri): AppDocument {
-        val idIndex = getColumnIndex("document_id")
-        val nameIndex = getColumnIndex("_display_name")
+        val id = cursor.getString(idIndex).replace("raw:", "")
+        val documentFile = File(id).toUri()
+        val name = cursor.getString(nameIndex)
 
-        val documentId = getString(idIndex).replace("raw:", "")
-        val documentFile = File(documentId).toUri()
-        val name = getString(nameIndex)
+        return AppDocument(documentId, name, documentFile, 0, Type.Document)
+    }
 
-        return AppDocument(documentUri.toString(), name, documentFile, 0, Type.Document)
+    override fun exist(documentUri: Uri): Boolean = context.queryExist(documentUri)
+
+    companion object {
+        const val NAME = "DOCUMENT"
     }
 }

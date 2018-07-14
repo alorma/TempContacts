@@ -71,8 +71,8 @@ class ConfigDocumentViewModel @Inject constructor(
         else -> 0
     }
 
-    private fun schedule(androidId: String, time: Long) =
-            scheduleRemoveTask.removeUser(androidId, time)
+    private fun schedule(id: String, time: Long) =
+            scheduleRemoveTask.removeDocument(id, time)
 
     sealed class Save {
         object InvalidTime : Save()

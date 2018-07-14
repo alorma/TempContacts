@@ -1,26 +1,30 @@
 package com.alorma.tempcontacts.data.framework
 
+import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import androidx.core.net.toUri
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
+import com.alorma.tempcontacts.extensions.queryExist
 import java.io.File
-import javax.inject.Inject
 
-class ImageCursor @Inject constructor() {
+class ImageCursor(private val context: Context): BaseCursor {
 
-    fun loadImage(cursor: Cursor, documentUri: Uri): AppDocument =
-            cursor.mapCursorToImage(documentUri)
+    override fun load(cursor: Cursor, documentId: String): AppDocument {
+        val nameIndex = cursor.getColumnIndex("_display_name")
+        val dataIndex = cursor.getColumnIndex("_data")
 
-    private fun Cursor.mapCursorToImage(documentUri: Uri): AppDocument {
-        val nameIndex = getColumnIndex("_display_name")
-        val dataIndex = getColumnIndex("_data")
-
-        val name = getString(nameIndex)
-        val data = getString(dataIndex)
+        val name = cursor.getString(nameIndex)
+        val data = cursor.getString(dataIndex)
         val dataFile = File(data).toUri()
 
-        return AppDocument(documentUri.toString(), name, dataFile, 0, Type.Image)
+        return AppDocument(documentId, name, dataFile, 0, Type.Image)
+    }
+
+    override fun exist(documentUri: Uri): Boolean = context.queryExist(documentUri)
+
+    companion object {
+        const val NAME = "IMAGE"
     }
 }

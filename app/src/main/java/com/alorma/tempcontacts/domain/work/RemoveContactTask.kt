@@ -7,7 +7,8 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class RemoveContactTask @Inject constructor(private val manager: WorkManager?) {
-    fun removeUser(androidId: String, time: Long) {
+
+    fun removeDocument(androidId: String, time: Long) {
         manager?.apply {
             val data = Data.Builder()
                     .putString(DeleteSingleDocumentWorker.ANDROID_ID, androidId)

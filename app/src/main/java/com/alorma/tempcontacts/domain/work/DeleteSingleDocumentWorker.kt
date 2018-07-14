@@ -9,10 +9,6 @@ import com.alorma.tempcontacts.data.framework.DocumentsDataSource as System
 
 class DeleteSingleDocumentWorker : Worker() {
 
-    companion object {
-        const val ANDROID_ID = "android_id"
-    }
-
     @Inject
     lateinit var documentsRepository: DocumentsRepository
 
@@ -30,5 +26,9 @@ class DeleteSingleDocumentWorker : Worker() {
 
     private fun deleteContact(androidId: String) {
         documentsRepository.delete(androidId)
+    }
+
+    companion object {
+        const val ANDROID_ID = "android_id"
     }
 }
