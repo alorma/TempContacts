@@ -18,14 +18,12 @@ class DeleteSingleDocumentWorker : Worker() {
         val androidId = inputData.getString(ANDROID_ID, null)
 
         androidId?.let {
-            deleteContact(it)
+            documentsRepository.loadDocument(androidId)?.let {
+                documentsRepository.delete(it.androidId, it.uri, it.type)
+            }
         }
 
         return Result.SUCCESS
-    }
-
-    private fun deleteContact(androidId: String) {
-        documentsRepository.delete(androidId)
     }
 
     companion object {

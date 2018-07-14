@@ -8,7 +8,7 @@ import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
 import com.alorma.tempcontacts.extensions.queryExist
 
-class ContactCursor(private val context: Context): BaseCursor {
+class ContactCursor(private val context: Context) : BaseCursor {
 
     override fun load(cursor: Cursor, documentId: String): AppDocument {
         val nameIndex = cursor.getColumnIndex("display_name")
@@ -26,6 +26,10 @@ class ContactCursor(private val context: Context): BaseCursor {
     }
 
     override fun exist(documentUri: Uri, type: Type): Boolean = context.queryExist(documentUri)
+
+    override fun delete(documentUri: Uri, type: Type) {
+        context.contentResolver.delete(documentUri, null, null)
+    }
 
     companion object {
         const val NAME = "CONTACT"

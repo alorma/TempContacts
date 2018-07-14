@@ -25,20 +25,15 @@ class CursorHandler @Inject constructor(private val context: Context,
         }
     }
 
-    override fun delete(documentUri: Uri) {
-        val type = context.contentResolver.getType(documentUri)
-        when {
-            type == "vnd.android.cursor.item/contact" -> contactCursor.delete(documentUri)
-            type.startsWith("image") -> imageCursor.delete(documentUri)
-            else -> documentCursor.delete(documentUri)
-        }
+    override fun delete(documentUri: Uri, type: Type) = when (type) {
+        Type.Contact -> contactCursor.delete(documentUri, type)
+        Type.Image -> imageCursor.delete(documentUri, type)
+        else -> documentCursor.delete(documentUri, type)
     }
 
-    override fun exist(documentUri: Uri, type: Type): Boolean {
-        return when(type) {
-            Type.Contact -> contactCursor.exist(documentUri, type)
-            Type.Image -> imageCursor.exist(documentUri, type)
-            else -> documentCursor.exist(documentUri, type)
-        }
+    override fun exist(documentUri: Uri, type: Type): Boolean = when (type) {
+        Type.Contact -> contactCursor.exist(documentUri, type)
+        Type.Image -> imageCursor.exist(documentUri, type)
+        else -> documentCursor.exist(documentUri, type)
     }
 }

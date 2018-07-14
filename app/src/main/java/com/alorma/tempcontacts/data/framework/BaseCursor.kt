@@ -7,6 +7,6 @@ import com.alorma.tempcontacts.domain.model.Type
 
 interface BaseCursor {
     fun load(cursor: Cursor, documentId: String): AppDocument
-    fun delete(documentUri: Uri) {}
+    fun delete(documentUri: Uri, type: Type)
     fun exist(documentUri: Uri, type: Type): Boolean
 }

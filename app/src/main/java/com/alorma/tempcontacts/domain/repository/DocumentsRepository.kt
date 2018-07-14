@@ -16,12 +16,14 @@ class DocumentsRepository @Inject constructor(
 
     fun load(): LiveData<List<AppDocument>> = cache.load()
 
+    fun loadDocument(androidId: String): AppDocument? = cache.get(androidId)
+
     fun loadDocuments(): List<AppDocument> = cache.loadContacts()
 
     fun import(uri: Uri): LiveData<AppDocument?> = system.loadDocument(uri)
 
-    fun delete(androidId: String) {
-        system.delete(androidId)
+    fun delete(androidId: String, uri: Uri, type: Type) {
+        system.delete(uri, type)
         cache.delete(androidId)
     }
 

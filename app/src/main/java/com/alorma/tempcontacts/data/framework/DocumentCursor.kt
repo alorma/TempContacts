@@ -25,6 +25,10 @@ class DocumentCursor(private val context: Context) : BaseCursor {
     override fun exist(documentUri: Uri, type: Type): Boolean =
             documentUri.toFile().exists()
 
+    override fun delete(documentUri: Uri, type: Type) {
+        documentUri.toFile().delete()
+    }
+
     companion object {
         const val NAME = "DOCUMENT"
     }

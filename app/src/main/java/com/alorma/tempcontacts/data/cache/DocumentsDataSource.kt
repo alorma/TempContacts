@@ -16,9 +16,7 @@ class DocumentsDataSource @Inject constructor(
 
     fun loadContacts(): List<AppDocument> = documentsDao.getList().map { mapper.map(it) }
 
-    fun get(androidId: String): LiveData<AppDocument> = Transformations.map(documentsDao.findById(androidId)) {
-        mapper.map(it)
-    }
+    fun get(androidId: String): AppDocument? = documentsDao.getById(androidId)?.let { mapper.map(it) }
 
     fun save(it: NewDocument) {
         val byAndroidId = documentsDao.getById(it.androidId)

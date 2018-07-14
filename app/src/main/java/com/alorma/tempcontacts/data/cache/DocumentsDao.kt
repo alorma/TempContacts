@@ -12,9 +12,6 @@ interface DocumentsDao {
     fun getList(): List<DocumentEntity>
 
     @Query("SELECT * FROM ${DocumentEntity.TABLE_NAME} WHERE id LIKE :id LIMIT 1")
-    fun findById(id: String): LiveData<DocumentEntity>
-
-    @Query("SELECT * FROM ${DocumentEntity.TABLE_NAME} WHERE id LIKE :id LIMIT 1")
     fun getById(id: String): DocumentEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

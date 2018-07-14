@@ -2,7 +2,6 @@ package com.alorma.tempcontacts.data.framework
 
 import android.content.Context
 import android.net.Uri
-import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
@@ -20,7 +19,7 @@ class DocumentsDataSource @Inject constructor(private val context: Context,
         }
     }
 
-    fun delete(uri: String) = cursorHandler.delete(uri.toUri())
+    fun delete(uri: Uri, type: Type) = cursorHandler.delete(uri, type)
 
     fun exist(documentUri: Uri, type: Type): Boolean = cursorHandler.exist(documentUri, type)
 }
