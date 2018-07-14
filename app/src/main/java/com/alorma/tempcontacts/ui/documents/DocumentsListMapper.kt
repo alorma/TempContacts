@@ -39,7 +39,7 @@ class DocumentsListMapper @Inject constructor() {
 
     private fun mapDocument(it: AppDocument): AppDocumentVM = when (it.type) {
         Type.Contact -> AppDocumentVM.Item.Contact(it.name, it.time)
-        Type.Image -> AppDocumentVM.Item.Image(it.name, it.time)
+        Type.Image -> AppDocumentVM.Item.Image(it.name, it.uri, it.time)
         Type.Document -> AppDocumentVM.Item.Document(it.name, it.time)
         Type.Unknown -> AppDocumentVM.Item.Invalid
     }

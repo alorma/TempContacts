@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alorma.tempcontacts.R
+import kotlinx.android.synthetic.main.row_document_image.view.*
 import kotlinx.android.synthetic.main.row_document_section.view.*
 
 private const val TYPE_INVALID = -1
@@ -22,7 +23,7 @@ class DocumentsAdapter :
                 when (viewType) {
                     TYPE_TITLE -> TitleViewHolder(it.inflate(R.layout.row_document_section, parent, false))
                     TYPE_CONTACT -> ContactHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
-                    TYPE_IMAGE -> ImageHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
+                    TYPE_IMAGE -> ImageHolder(it.inflate(R.layout.row_document_image, parent, false))
                     TYPE_DOCUMENT -> DocumentHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
                     else -> InvalidHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
                 } as Holder<AppDocumentVM>
@@ -54,7 +55,7 @@ class DocumentsAdapter :
 
     class ImageHolder(itemView: View) : Holder<AppDocumentVM.Item.Image>(itemView) {
         override fun bind(t: AppDocumentVM.Item.Image) {
-            itemView.findViewById<TextView>(android.R.id.text1).text = t.name
+            itemView.imageView.setImageURI(t.uri)
         }
     }
 
