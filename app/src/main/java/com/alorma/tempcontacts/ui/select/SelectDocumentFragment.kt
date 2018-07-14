@@ -13,7 +13,6 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
 import com.alorma.tempcontacts.dsl.dsl
-import com.alorma.tempcontacts.ui.configuration.DocumentConfigurationFragment
 import com.karumi.dexter.DexterBuilder
 import kotlinx.android.synthetic.main.fragment_select_document.view.*
 import javax.inject.Inject
@@ -68,9 +67,8 @@ class SelectDocumentFragment : Fragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         data?.data?.let {
-            val bundle = DocumentConfigurationFragment.generateArguments(it.toString())
-            findNavController(this)
-                    .navigate(R.id.action_createDocumentFragment_to_documentConfigurationFragment, bundle)
+            val directions = SelectDocumentFragmentDirections.configDocument(it.toString())
+            findNavController(this).navigate(directions)
         }
     }
 

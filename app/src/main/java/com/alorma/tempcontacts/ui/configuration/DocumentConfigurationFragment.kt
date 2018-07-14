@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment.findNavController
 import com.alorma.tempcontacts.R
@@ -39,17 +38,17 @@ class DocumentConfigurationFragment : Fragment() {
 
         viewModel.subscribe(this)
 
-        arguments?.getString(EXTRA_URI)?.let {
-            viewModel.onDocumentUriLoaded(Uri.parse(it)).observe(this) {
-                it?.let {
-                    appDocument = it
-                    contactName.text = it.name
-                    imageType.setImageResource(when (it.type) {
-                        Type.Contact -> R.drawable.ic_person_add
-                        Type.Image -> R.drawable.ic_camera
-                        else -> R.drawable.ic_attach_file
-                    })
-                }
+        val uri = DocumentConfigurationFragmentArgs.fromBundle(arguments).uri
+
+        viewModel.onDocumentUriLoaded(Uri.parse(uri)).observe(this) {
+            it?.let {
+                appDocument = it
+                contactName.text = it.name
+                imageType.setImageResource(when (it.type) {
+                    Type.Contact -> R.drawable.ic_person_add
+                    Type.Image -> R.drawable.ic_camera
+                    else -> R.drawable.ic_attach_file
+                })
             }
         }
 
@@ -66,10 +65,4 @@ class DocumentConfigurationFragment : Fragment() {
                     }
         }
     }
-
-    companion object {
-        private const val EXTRA_URI = "uri"
-        fun generateArguments(uri: String): Bundle = bundleOf(EXTRA_URI to uri)
-    }
-
 }

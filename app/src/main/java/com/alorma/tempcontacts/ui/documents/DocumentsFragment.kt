@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation.findNavController
+import androidx.navigation.Navigation.createNavigateOnClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
@@ -43,9 +43,9 @@ class DocumentsFragment : Fragment() {
         view.recycler.adapter = adapter
         view.recycler.layoutManager = LinearLayoutManager(context)
 
-        view.fab.setOnClickListener {
-            findNavController(it).navigate(R.id.action_documentsFragment_to_selectDocumentFragment)
-        }
+        view.fab.setOnClickListener(
+                createNavigateOnClickListener(R.id.action_documentsFragment_to_selectDocumentFragment)
+        )
     }
 
     private fun onState(it: DocumentsListMapper.DocumentsState) {
