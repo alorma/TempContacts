@@ -69,7 +69,8 @@ class SelectDocumentFragment : Fragment() {
 
         data?.data?.let {
             val bundle = DocumentConfigurationFragment.generateArguments(it.toString())
-            findNavController(this).navigate(R.id.documentConfigurationFragment, bundle)
+            findNavController(this)
+                    .navigate(R.id.action_createDocumentFragment_to_documentConfigurationFragment, bundle)
         }
     }
 

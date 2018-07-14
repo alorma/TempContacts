@@ -44,7 +44,7 @@ class DocumentsFragment : Fragment() {
         view.recycler.layoutManager = LinearLayoutManager(context)
 
         view.fab.setOnClickListener {
-            findNavController(it).navigate(R.id.selectDocumentFragment)
+            findNavController(it).navigate(R.id.action_documentsFragment_to_selectDocumentFragment)
         }
     }
 

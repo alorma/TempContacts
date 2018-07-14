@@ -22,7 +22,8 @@
         tools:layout="@layout/fragment_select_document">
         <action
             android:id="@+id/action_createDocumentFragment_to_documentConfigurationFragment"
-            app:destination="@id/documentConfigurationFragment" />
+            app:destination="@id/documentConfigurationFragment"
+            app:popUpTo="@+id/documentsFragment" />
     </fragment>
     <fragment
         android:id="@+id/documentConfigurationFragment"

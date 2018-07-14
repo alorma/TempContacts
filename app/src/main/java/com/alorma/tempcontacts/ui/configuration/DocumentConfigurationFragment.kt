@@ -60,9 +60,7 @@ class DocumentConfigurationFragment : Fragment() {
                             ConfigDocumentMapper.NewState.InvalidTime -> {
                             }
                             ConfigDocumentMapper.NewState.Complete -> {
-                                findNavController(this)
-                                        .popBackStack(R.id.documentsFragment,
-                                                false)
+                                findNavController(this).popBackStack()
                             }
                         }
                     }
