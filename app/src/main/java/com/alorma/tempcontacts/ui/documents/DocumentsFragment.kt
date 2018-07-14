@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.navigation.Navigation.createNavigateOnClickListener
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.alorma.tempcontacts.R
 import com.alorma.tempcontacts.TempContactsApp.Companion.component
@@ -14,10 +13,6 @@ import kotlinx.android.synthetic.main.fragment_documents.view.*
 import javax.inject.Inject
 
 class DocumentsFragment : Fragment() {
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View =
-            inflater.inflate(R.layout.fragment_documents, container, false)
 
     @Inject
     lateinit var viewModel: DocumentsListViewModel
@@ -29,6 +24,10 @@ class DocumentsFragment : Fragment() {
 
         component add DocumentsListModule(this) inject this
     }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+                              savedInstanceState: Bundle?): View =
+            inflater.inflate(R.layout.fragment_documents, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -42,10 +41,6 @@ class DocumentsFragment : Fragment() {
         adapter = DocumentsAdapter()
         view.recycler.adapter = adapter
         view.recycler.layoutManager = LinearLayoutManager(context)
-
-        view.fab.setOnClickListener(
-                createNavigateOnClickListener(R.id.action_documentsFragment_to_selectDocumentFragment)
-        )
     }
 
     private fun onState(it: DocumentsListMapper.DocumentsState) {

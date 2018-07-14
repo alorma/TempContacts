@@ -8,17 +8,17 @@
     <fragment
         android:id="@+id/documentsFragment"
         android:name="com.alorma.tempcontacts.ui.documents.DocumentsFragment"
-        android:label="DocumentsFragment"
+        android:label="@string/app_name"
         tools:layout="@layout/fragment_documents">
         <action
-            android:id="@+id/action_documentsFragment_to_selectDocumentFragment"
+            android:id="@+id/selectDocument"
             app:destination="@id/selectDocumentFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/selectDocumentFragment"
         android:name="com.alorma.tempcontacts.ui.select.SelectDocumentFragment"
-        android:label="fragment_select_document"
+        android:label="@string/selectDocument"
         tools:layout="@layout/fragment_select_document">
         <action
             android:id="@+id/configDocument"
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/documentConfigurationFragment"
         android:name="com.alorma.tempcontacts.ui.configuration.DocumentConfigurationFragment"
-        android:label="DocumentConfigurationFragment"
+        android:label="@string/configDocument"
         tools:layout="@layout/fragment_config_document">
         <argument
             android:name="uri"

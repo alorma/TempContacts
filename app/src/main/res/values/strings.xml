@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Temporal</string>
+    <string name="selectDocument">Select document</string>
+    <string name="configDocument">Configure document</string>
 </resources>
