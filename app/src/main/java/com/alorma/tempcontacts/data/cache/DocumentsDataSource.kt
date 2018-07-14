@@ -1,5 +1,6 @@
 package com.alorma.tempcontacts.data.cache
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
 import com.alorma.tempcontacts.domain.model.AppDocument
@@ -19,6 +20,7 @@ class DocumentsDataSource @Inject constructor(
     fun get(androidId: String): AppDocument? = documentsDao.getById(androidId)?.let { mapper.map(it) }
 
     fun save(it: NewDocument) {
+        Log.i("AlormaCreate", it.androidId)
         val byAndroidId = documentsDao.getById(it.androidId)
         if (byAndroidId == null) {
             documentsDao.insertAll(mapper.map(it))

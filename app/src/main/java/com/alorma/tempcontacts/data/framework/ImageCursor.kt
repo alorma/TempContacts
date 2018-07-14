@@ -19,7 +19,7 @@ class ImageCursor(private val context: Context) : BaseCursor {
         val data = cursor.getString(dataIndex)
         val dataFile = File(data).toUri()
 
-        return AppDocument(documentId, name, dataFile, 0, Type.Image)
+        return AppDocument(data, name, dataFile, 0, Type.Image)
     }
 
     override fun exist(documentUri: Uri, type: Type): Boolean =
