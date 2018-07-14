@@ -2,7 +2,6 @@ package com.alorma.tempcontacts.ui.configuration
 
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,17 +54,18 @@ class DocumentConfigurationFragment : Fragment() {
         }
 
         saveButton.setOnClickListener {
-            viewModel.save(appDocument, TimeSelection.Custom(10, TimeUnit.SECONDS)).observe(this) {
-                when (it) {
-                    ConfigDocumentMapper.NewState.InvalidTime -> {
+            viewModel.save(appDocument, TimeSelection.Custom(10, TimeUnit.MINUTES))
+                    .observe(this) {
+                        when (it) {
+                            ConfigDocumentMapper.NewState.InvalidTime -> {
+                            }
+                            ConfigDocumentMapper.NewState.Complete -> {
+                                findNavController(this)
+                                        .popBackStack(R.id.documentsFragment,
+                                                false)
+                            }
+                        }
                     }
-                    ConfigDocumentMapper.NewState.Complete -> {
-                        findNavController(this)
-                                .popBackStack(R.id.documentsFragment,
-                                        false)
-                    }
-                }
-            }
         }
     }
 

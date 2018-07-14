@@ -3,6 +3,7 @@ package com.alorma.tempcontacts.data.framework
 import android.content.Context
 import android.database.Cursor
 import android.net.Uri
+import androidx.core.net.toFile
 import androidx.core.net.toUri
 import com.alorma.tempcontacts.domain.model.AppDocument
 import com.alorma.tempcontacts.domain.model.Type
@@ -22,7 +23,7 @@ class ImageCursor(private val context: Context) : BaseCursor {
     }
 
     override fun exist(documentUri: Uri, type: Type): Boolean =
-            File(documentUri.toString()).exists()
+            documentUri.toFile().exists()
 
     companion object {
         const val NAME = "IMAGE"
