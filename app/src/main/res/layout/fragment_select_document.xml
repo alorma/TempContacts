@@ -40,22 +40,6 @@
         app:layout_constraintTop_toTopOf="@+id/contactCreate" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/photoImport"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="0dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="24dp"
-        android:text="PHOTO"
-        app:backgroundTint="?colorPrimary"
-        app:cornerRadius="16dp"
-        app:icon="@drawable/ic_camera"
-        app:iconPadding="20dp"
-        app:iconTint="@color/white"
-        app:layout_constraintEnd_toEndOf="@+id/contactImport"
-        app:layout_constraintStart_toStartOf="@+id/contactImport"
-        app:layout_constraintTop_toBottomOf="@+id/contactImport" />
-
-    <com.google.android.material.button.MaterialButton
         android:id="@+id/documentImport"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="wrap_content"
@@ -69,6 +53,6 @@
         app:iconTint="@color/white"
         app:layout_constraintEnd_toEndOf="@+id/contactImport"
         app:layout_constraintStart_toStartOf="@+id/contactImport"
-        app:layout_constraintTop_toBottomOf="@+id/photoImport" />
+        app:layout_constraintTop_toBottomOf="@+id/contactImport" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

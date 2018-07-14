@@ -19,7 +19,6 @@ import kotlinx.android.synthetic.main.fragment_select_document.view.*
 import javax.inject.Inject
 
 private const val REQ_CONTACT: Int = 1121
-private const val REQ_IMAGE: Int = 1122
 private const val REQ_FILE: Int = 1123
 
 class SelectDocumentFragment : Fragment() {
@@ -53,14 +52,6 @@ class SelectDocumentFragment : Fragment() {
                 startActivityForResult(Intent(Intent.ACTION_PICK).apply {
                     type = ContactsContract.Contacts.CONTENT_TYPE
                 }, REQ_CONTACT)
-            }
-        }
-
-        view.photoImport.setOnClickListener {
-            getStoragePermission {
-                startActivityForResult(Intent(Intent.ACTION_GET_CONTENT).apply {
-                    type = "image/*"
-                }, REQ_IMAGE)
             }
         }
 

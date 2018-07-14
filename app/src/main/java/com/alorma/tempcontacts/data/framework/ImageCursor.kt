@@ -14,11 +14,17 @@ class ImageCursor(private val context: Context) : BaseCursor {
     override fun load(cursor: Cursor, documentId: String): AppDocument {
         val nameIndex = cursor.getColumnIndex("_display_name")
         val dataIndex = cursor.getColumnIndex("_data")
+        val documentIdIndex = cursor.getColumnIndex("document_id")
 
         val name = cursor.getString(nameIndex)
-        val data = cursor.getString(dataIndex)
-        val dataFile = File(data).toUri()
 
+        val data = if (dataIndex != -1) {
+            cursor.getString(dataIndex)
+        } else {
+            cursor.getString(documentIdIndex).replace("raw:", "")
+        }
+
+        val dataFile = File(data).toUri()
         return AppDocument(data, name, dataFile, 0, Type.Image)
     }
 
