@@ -6,6 +6,7 @@
         android:id="@id/selectDocument"
         android:icon="@drawable/ic_add"
         android:title="@string/selectDocument"
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        app:iconTint="@color/white"/>
 
 </menu>
