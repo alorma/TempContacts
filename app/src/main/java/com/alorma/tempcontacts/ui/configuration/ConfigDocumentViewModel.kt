@@ -32,7 +32,7 @@ class ConfigDocumentViewModel @Inject constructor(
                         it.appDocument.name,
                         it.appDocument.uri,
                         it.appDocument.type,
-                        timeCalculation
+                        System.currentTimeMillis() + timeCalculation
                 )
                 documentsRepository.create(newDocument)
                 schedule(it.appDocument.androidId, timeCalculation)

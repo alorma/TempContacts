@@ -5,6 +5,7 @@ import com.alorma.tempcontacts.di.ApplicationComponent
 import com.alorma.tempcontacts.di.ApplicationModule
 import com.alorma.tempcontacts.di.DaggerApplicationComponent
 import com.alorma.tempcontacts.di.DataModule
+import com.jakewharton.threetenabp.AndroidThreeTen
 
 class TempContactsApp : Application() {
 
@@ -14,6 +15,8 @@ class TempContactsApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        AndroidThreeTen.init(this)
 
         component = DaggerApplicationComponent.builder()
                 .applicationModule(ApplicationModule(this))

@@ -53,7 +53,7 @@ class DocumentConfigurationFragment : Fragment() {
         }
 
         saveButton.setOnClickListener {
-            viewModel.save(appDocument, TimeSelection.Custom(3, TimeUnit.MINUTES))
+            viewModel.save(appDocument, TimeSelection.Custom(30, TimeUnit.MINUTES))
                     .observe(this) {
                         when (it) {
                             ConfigDocumentMapper.NewState.InvalidTime -> {

@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.alorma.tempcontacts.R
+import kotlinx.android.synthetic.main.row_document_contact.view.*
 import kotlinx.android.synthetic.main.row_document_image.view.*
 import kotlinx.android.synthetic.main.row_document_section.view.*
 
@@ -22,9 +23,9 @@ class DocumentsAdapter :
             LayoutInflater.from(parent.context).let {
                 when (viewType) {
                     TYPE_TITLE -> TitleViewHolder(it.inflate(R.layout.row_document_section, parent, false))
-                    TYPE_CONTACT -> ContactHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
+                    TYPE_CONTACT -> ContactHolder(it.inflate(R.layout.row_document_contact, parent, false))
                     TYPE_IMAGE -> ImageHolder(it.inflate(R.layout.row_document_image, parent, false))
-                    TYPE_DOCUMENT -> DocumentHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
+                    TYPE_DOCUMENT -> DocumentHolder(it.inflate(R.layout.row_document_doc, parent, false))
                     else -> InvalidHolder(it.inflate(android.R.layout.simple_list_item_1, parent, false))
                 } as Holder<AppDocumentVM>
             }
@@ -49,19 +50,22 @@ class DocumentsAdapter :
 
     class ContactHolder(itemView: View) : Holder<AppDocumentVM.Item.Contact>(itemView) {
         override fun bind(t: AppDocumentVM.Item.Contact) {
-            itemView.findViewById<TextView>(android.R.id.text1).text = t.name
+            itemView.textView.text = t.name
+            setTimeToDelete(R.id.textViewCount, t.timeToDelete)
         }
     }
 
     class ImageHolder(itemView: View) : Holder<AppDocumentVM.Item.Image>(itemView) {
         override fun bind(t: AppDocumentVM.Item.Image) {
             itemView.imageView.setImageURI(t.uri)
+            setTimeToDelete(R.id.textViewCount, t.timeToDelete)
         }
     }
 
     class DocumentHolder(itemView: View) : Holder<AppDocumentVM.Item.Document>(itemView) {
         override fun bind(t: AppDocumentVM.Item.Document) {
-            itemView.findViewById<TextView>(android.R.id.text1).text = t.name
+            itemView.textView.text = t.name
+            setTimeToDelete(R.id.textViewCount, t.timeToDelete)
         }
     }
 
@@ -73,5 +77,8 @@ class DocumentsAdapter :
 
     abstract class Holder<T : AppDocumentVM>(itemView: View) : RecyclerView.ViewHolder(itemView) {
         abstract fun bind(t: T)
+        fun setTimeToDelete(textId: Int, text: String) {
+            itemView.findViewById<TextView>(textId).text = text
+        }
     }
 }
